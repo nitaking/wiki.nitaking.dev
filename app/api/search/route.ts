@@ -7,9 +7,6 @@ import { stopwords as japaneseStopwords } from "@orama/stopwords/japanese";
 export const { GET } = createFromSource(source, undefined, {
     localeMap: {
         ja: {
-            schema: {
-                name: "string",
-            },
             components: {
                 tokenizer: createTokenizer({
                     language: 'japanese',
@@ -17,7 +14,5 @@ export const { GET } = createFromSource(source, undefined, {
                 }),
             },
         },
-        'custom-locale': 'japanese',
-
     },
 });
