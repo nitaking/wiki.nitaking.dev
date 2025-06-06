@@ -12,7 +12,7 @@
     "@orama/orama": "^3.1.6",
     "@orama/stopwords": "^3.1.6",
     "@orama/tokenizers": "^3.1.6",
-    "flexsearch": "^0.8.205",
+    "flexsearch": "0.8.205",
     "fumadocs-core": "15.2.8",
     "fumadocs-mdx": "11.6.0",
     "fumadocs-ui": "15.2.8",
