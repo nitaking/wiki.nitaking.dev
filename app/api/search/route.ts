@@ -1,9 +1,11 @@
 import { source } from '@/lib/source';
 import { NextRequest } from 'next/server';
 import FlexSearch from 'flexsearch';
+import fs from 'fs';
+import path from 'path';
 
 const searchIndex = new FlexSearch.Index({
-    tokenize: 'forward',
+    tokenize: 'full',
     resolution: 9
 });
 
@@ -19,14 +21,32 @@ async function buildSearchIndex() {
         textContent += `${page.data.title || ''} `;
         textContent += `${page.data.description || ''} `;
         
-        const contentMap: Record<string, string> = {
-            '/': 'フロントエンドを主軸としたFull-Stack Engineerです スタートアップでの経験をベースにプロダクト開発に関わっています Photography やガジェットなどが趣味で ナレッジの蓄積や共有に関心があります ツール好きで いろんなことを試して取り入れることをライフワークにしています',
-            '/photography': 'Photography 写真 カメラ フォトウォーク 撮影 GR IIIx X-H2 友達 瞬間 楽しみ アウトプット インプット',
-            '/photography/gr-iiix': 'GR IIIx photography camera 写真 撮影 カメラ'
-        };
-        
-        if (contentMap[page.url]) {
-            textContent += ' ' + contentMap[page.url];
+        try {
+            let filePath;
+            if (page.url === '/') {
+                filePath = path.join(process.cwd(), 'content/docs', 'index.mdx');
+            } else {
+                filePath = path.join(process.cwd(), 'content/docs', `${page.url}.mdx`);
+                if (!fs.existsSync(filePath)) {
+                    filePath = path.join(process.cwd(), 'content/docs', page.url, 'index.mdx');
+                }
+            }
+            
+            if (fs.existsSync(filePath)) {
+                const fileContent = fs.readFileSync(filePath, 'utf-8');
+                const cleanContent = fileContent
+                    .replace(/---[\s\S]*?---/g, '')
+                    .replace(/!\[.*?\]\(.*?\)/g, '')
+                    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/\n+/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                textContent += ' ' + cleanContent;
+                console.log(`Extracted content from ${filePath}: "${cleanContent.substring(0, 100)}..."`);
+            }
+        } catch (error) {
+            console.warn(`Could not read file for ${page.url}:`, error);
         }
         
         console.log(`Indexing page ${page.url}: "${textContent.substring(0, 200)}..."`);
