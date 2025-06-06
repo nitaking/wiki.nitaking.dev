@@ -1,0 +1,12 @@
+---
+description: '#life'
+---
+
+# エアコン掃除
+
+### AN22TFS-W
+
+* お掃除機能付きエアコンの掃除動画&#x20;
+
+{% embed url="https://www.youtube.com/embed/3xrYk_Xxw4c?si=nUvP6KHkEbMgAr4o" %}
+

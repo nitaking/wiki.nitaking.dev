@@ -1,0 +1,16 @@
+---
+description: '#game'
+---
+
+# Tournament Tool
+
+{% embed url="https://www.reddit.com/r/yugioh/comments/p9znfj/app_for_hosting_a_local_tournament/" %}
+
+* `challonge`
+* Tonamel
+
+{% embed url="https://tonamel.com" %}
+
+***
+
+#### グラフビュー

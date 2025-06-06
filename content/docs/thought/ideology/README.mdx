@@ -1,0 +1,6 @@
+---
+description: '#ideology'
+---
+
+# Ideology
+
