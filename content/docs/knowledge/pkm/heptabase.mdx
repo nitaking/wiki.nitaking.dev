@@ -1,0 +1,15 @@
+---
+description: '#pkm'
+---
+
+# Heptabase
+
+
+
+also see:
+
+{% embed url="https://www.nitaking.dev/my-tooling-trands-2024-03/" %}
+
+{% embed url="https://www.nitaking.dev/my-tooling-trends-2024-03-15/" %}
+
+* [note-app-histories.md](note-app-histories.md "mention")

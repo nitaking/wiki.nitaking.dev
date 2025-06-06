@@ -1,0 +1,17 @@
+---
+description: API First /  API Mandate を採用する
+icon: webhook
+---
+
+# Adopting an API-First / API Mandate Strategy
+
+> 1. すべてのチームは、今後サービスインターフェースを通じてデータや機能を公開する
+> 2. 各チームはこのインタフェースを通じて相互に通信しなければいけない
+> 3. すべてのサービスインタフェースは例外なく、外部か可能なように1から設計しなければいけない。チームは外部の開発者にインタフェースを公開できるように計画・設計しなければいけない。例外はない
+
+この概念を支持しています。 マイクロサービスを検討有無にかかわらず、最初からインタフェース非公開前提でDBから直接アクセスした設計では、インフラ層が密結合になってしまい、改修コストが跳ね上がった経験があります。 また、インタフェースが公開できる状態というのはリポジトリ・プロダクトのドキュメンテーションという点においても正しくワークしている状態であり、インタフェースが公開できない状態は荒れているシーンが多々あります。
+
+**参考**
+
+* [The API Mandate - Install API Thinking at your Company – API-University](https://api-university.com/blog/the-api-mandate/)
+* [API Mandate: How Jeff Bezos’ memo changed software forever](https://konghq.com/blog/enterprise/api-mandate)

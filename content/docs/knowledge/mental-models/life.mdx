@@ -1,0 +1,71 @@
+---
+description: 人生における意思決定のフレームワーク
+---
+
+# Life
+
+### 人生におけるフレームワーク <a href="#niokerufurmuwku" id="niokerufurmuwku"></a>
+
+意思決定のフレームワーク。
+
+### 家族（自分を含む）・友人 > 仕事 <a href="#womu" id="womu"></a>
+
+* 自分を優先することをやめない。今の自分は楽しんでいるか。楽しめる自分であるか。
+* 友人や家族といったつながりを疎かにせず、自分の感情に沿って優先しているか。
+* 目の前の仕事やタスクに忙殺され、そちらを優先してしまっていないか。その優先度の選択は家族を幸せにしているか。
+* その上で、仕事をする。仕事は生活のために割り切りすぎない。楽しむこと。
+
+### やらない後悔よりやった後悔 <a href="#yaranaiyoriyatta" id="yaranaiyoriyatta"></a>
+
+迷うくらいなら行動しよう。行動した上での後悔はまだマシ。
+
+### 常にベストを尽くす <a href="#nibesutowokusu" id="nibesutowokusu"></a>
+
+振り返ったときに、これ以上良い結果はないと満足できるように。
+
+* Level 1: タスク完了のために最小限の労力を費やす。
+* Level 2: タスクにひたすら集中して注意深く努力をする。
+* Level 3: タスクと状況を、より優れた自分になるための機会だと捉える。
+
+also see: [Life | Paul Copplestone](https://paul.copplest.one/knowledge/levels/life.html#always-try-your-best)
+
+### 常に人間らしくあるか <a href="#nirashikuaruka" id="nirashikuaruka"></a>
+
+その選択は人間らしいか。人を機械のように扱っていないか。感情をないがしろにしていないか。
+
+* 自分は笑っているか。楽しんでいるか。
+* 他者は笑っているか。楽しんでいるか。
+
+### 常に誠実であること <a href="#nidearukoto" id="nidearukoto"></a>
+
+* Level 1: 他人に嘘をつかない。他人のためにならない嘘をつかない。
+* Level 2: 真実を誇張しない。盛りすぎない。見栄をはらない。
+* Level 3: 自分に嘘をつかない。俯瞰したときに自分を尊重した振る舞いを意識する。
+
+### 完璧主義ではなく、最善主義でいよう <a href="#dehanakudeiyou" id="dehanakudeiyou"></a>
+
+完璧になにかをなすことは難しい。その時の最善を選ぶことを優先しよう。
+
+### 健全であろう <a href="#dearou" id="dearou"></a>
+
+難しい人間関係において、自分のせいだけでなく、相手の理由によるものだと自分に言い聞かせることができる。
+
+also see: [Life | Paul Copplestone](https://paul.copplest.one/knowledge/levels/life.html#always-be-wholesome)
+
+### 考えすぎたら歩く <a href="#esugitaraku" id="esugitaraku"></a>
+
+体を動かすことで煮詰まった脳を開放しよう。
+
+### 迷ったら買わない <a href="#ttarawanai" id="ttarawanai"></a>
+
+服は迷ったら買う。
+
+### 引用 <a href="#yin-yong" id="yin-yong"></a>
+
+> _ヴィクトール・フランクル：「人生の最後の自由は、どんな状況でも自分の態度を選ぶ自由である」_
+
+> _ニーチェ： 「そのことを殺さないものは、私をより強くする」_
+
+> ヘレン・ケラー： 「人生は大胆な冒険か、それとも何もないかのどちらかです」
+
+***

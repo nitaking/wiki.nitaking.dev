@@ -1,0 +1,33 @@
+---
+hidden: true
+icon: chart-simple
+---
+
+# Analytics
+
+{% content-ref url="tinybird.md" %}
+[tinybird.md](tinybird.md)
+{% endcontent-ref %}
+
+{% content-ref url="tinylytics.md" %}
+[tinylytics.md](tinylytics.md)
+{% endcontent-ref %}
+
+* 現在使用しているもの
+  * [Umami](https://umami.is/)
+  * Google Analytics
+  * [tinylytics.md](tinylytics.md "mention")
+* 使用していないが、良さそうなもの
+  * Tinybird
+
+
+
+***
+
+> * [tinylytics.md](tinylytics.md "mention") なぜ無料なのか、の思想が素晴らしい。
+>
+> > A lot of analytics software is too expensive. Period. Heck, I just started a small side project or a personal site and I don’t want to shell out $9 - $14 per month just for analytics that looks pretty. Most people don’t want to spend that… I certainly don’t want to, especially when you’re just starting and you want to get something simple up and running.
+>
+> [Why we have a free plan](https://tinylytics.app/docs/why_free_plan)
+>
+> [https://nitaking.micro.blog/2024/08/11/tinylytics-tinylytics.html](https://nitaking.micro.blog/2024/08/11/tinylytics-tinylytics.html)
