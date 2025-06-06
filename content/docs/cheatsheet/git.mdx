@@ -1,0 +1,11 @@
+# Git
+
+## Git / IntelliJ AutoSquash 設定
+
+[IntelliJでGitのautosquashを使う](https://zenn.dev/naoyukik/articles/cdb51fba660440)
+
+fixupを自動的にまとめる機能を有効化する
+
+```sh
+git config rebase.autosquash true
+```

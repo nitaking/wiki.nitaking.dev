@@ -1,0 +1,91 @@
+---
+description: '#next #tailwind'
+---
+
+# Next で tailwind スタイルの共存
+
+
+
+```tsx
+import Image from 'next/image'
+import { FC, HTMLAttributes } from 'react'
+
+type TailwindRounded =
+  | 'rounded-none'
+  | 'rounded-sm'
+  | 'rounded'
+  | 'rounded-md'
+  | 'rounded-lg'
+  | 'rounded-xl'
+  | 'rounded-2xl'
+  | 'rounded-3xl'
+  | 'rounded-full'
+
+interface ImageWrapperProps {
+  src: string
+  alt: string
+  width?: string
+  height?: string
+  rounded?: boolean | TailwindRounded
+  className?: HTMLAttributes<HTMLDivElement>['className']
+  priority?: boolean
+  quality?: number
+  sizes?: string
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
+}
+
+/**
+ * @description Next Image Wrapper: for tailwindcss styling
+ * @example
+ * <ImageWrapper src="/images/logo.png" alt="logo" /> // 基本的な使用方法
+ * @example
+ * <ImageWrapper
+ *   src="/path/to/image.jpg"
+ *   alt="description"
+ *   width="w-10"
+ *   height="h-10"
+ *   rounded={false}
+ *   className="border border-gray-200"
+ * /> // カスタマイズ
+ * @param src Image URL
+ * @param alt Image Alt
+ * @param width Image Width
+ * @param height Image Height
+ * @param rounded Image Rounded
+ * @param className Image Container Class
+ * @param priority Image Priority
+ * @param quality Image Quality: default 75
+ * @param sizes Image Sizes
+ * @param objectFit Image Object Fit: contain | cover | fill | none | scale-down
+ * @ref https://nextjs.org/docs/pages/api-reference/components/image
+ */
+export const NextImage: FC<ImageWrapperProps> = ({
+  src,
+  alt,
+  width = 'w-6',
+  height = 'h-6',
+  rounded = false,
+  className = '',
+  priority = false,
+  quality = 75,
+  sizes = '100%',
+  objectFit = 'cover',
+}) => {
+  const roundedClass =
+    typeof rounded === 'boolean' ? (rounded ? 'rounded' : '') : rounded
+  return (
+    <div className={`relative ${width} ${height} ${className}`}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        quality={quality}
+        className={`object-${objectFit} ${roundedClass}`}
+      />
+    </div>
+  )
+}
+
+```
