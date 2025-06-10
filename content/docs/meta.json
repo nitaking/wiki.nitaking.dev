@@ -4,5 +4,7 @@
     "index",
     "---Knowledge---",
     "..."
-  ]
+  ],
+  "root": true,
+  "defaultOpen": true
 }
