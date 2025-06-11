@@ -1,9 +1,16 @@
 {
   "pages": [
-    "---\uD83D\uDC4B Welcome---",
+    "---👋 Welcome---",
     "index",
     "---Knowledge---",
-    "..."
+    "cheatsheet",
+    "digital-garden",
+    "knowledge",
+    "list",
+    "photography",
+    "tech",
+    "thought",
+    "workflow"
   ],
   "root": true,
   "defaultOpen": true
