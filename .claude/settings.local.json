@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(rmdir:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
