@@ -1,8 +1,22 @@
 {
   "pages": [
-    "---\uD83D\uDC4B Welcome---",
+    "---👋 Welcome---",
     "index",
     "---Knowledge---",
-    "..."
-  ]
+    "analytics",
+    "cheatsheet",
+    "digital-garden",
+    "gaming",
+    "ideology",
+    "list",
+    "mental-models",
+    "next",
+    "photography",
+    "pkm",
+    "tech",
+    "thoughts",
+    "workflow"
+  ],
+  "root": true,
+  "defaultOpen": true
 }

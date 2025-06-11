@@ -1,0 +1,18 @@
+---
+title: Review Point
+description: Frontend development review points and best practices
+---
+
+## ❌ Don't Using CSS in JS
+
+> **危険**
+> `Inline style`や`CSS in JS`は避ける
+
+* 2025年現代において、SSRでもCSRでもパフォーマンスよくスタイリングする方法はCSSです。JSでのスタイルは避けましょう。
+* CSS Moduleは古くからあるものですが、Nextでも採用されており、現代においても柔軟に活用可能な類です。
+* TailwindとCSS Moduleを使用してWebのスタイリングをすることをおすすめしています。
+
+## Basically, Don't Using useEffect in Custom Hooks
+
+* useEffectを設置することで、Custom Hooksに副作用が発生。
+* グローバルなイベントリスナーの場合、コンポーネント階層の外部で管理したほうが、分離性・テスト容易性が高まる。
