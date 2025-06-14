@@ -110,6 +110,40 @@ content/docs/
 - 技術的な詳細説明
 - コードブロックが多用されているもの
 
+### MDXファイル移行評価リスト（2024年12月）
+
+**高優先度（スコア8-10）- 即座に移行推奨**
+- ✅ tech-assets.mdx (10) - ツールリスト → Recommend Stack
+- ✅ gaming-tournament-tool.mdx (9) - トーナメントツール比較 → Game Tournament Tool
+- ✅ thoughts-spotify-podcast.mdx (8) - Spotify設定Tips → Podcast Tips
+- ✅ thoughts-wtrdingu.mdx (8) - ウォーターローディング説明 → Water Loading
+
+**中優先度（スコア5-7）- 移行検討**
+- tech-twelve-factor-app.mdx (7) - 外部リソースリンク集
+- digital-garden-nolebase.mdx (7) - ツール説明
+- tech-css-modules-composition.mdx (7) - 内容が少なすぎる
+- thoughts-aircon-cleaning.mdx (6) - 動画リンクのみ
+- tech-kiss-principle.mdx (6) - 簡潔な原則説明
+- workflow-dev-workflow.mdx (6) - 開発ワークフローの好み
+- thoughts-pet-insurance.mdx (6) - ペット保険の個人メモ
+- thoughts-keisannsei-chinou.mdx (5) - 結晶性知能の定義
+- thoughts-ryudousei-chinou.mdx (5) - 流動性知能の定義
+
+**低優先度（スコア1-4）- MDXのまま保持**
+- tech-barrel-files.mdx (4) - 技術説明＋コード例
+- postmortem.mdx (4) - 構造化テンプレート
+- adr-architecture-decision-records.mdx (4) - テンプレート
+- gaming-chart-per-deck-theme.mdx (3) - 詳細ハウツーガイド
+- tech-swr.mdx (3) - 技術コンテンツ＋大量コード例
+- next-tailwind-styles.mdx (2) - 大きなコードコンポーネント
+- tech-online-ddl-mysql.mdx (2) - 技術ドキュメント＋SQL例
+- tech-decision-making-framework.mdx (2) - 構造化フレームワーク
+- tech-api-first-mandate-strategy.mdx (2) - 技術説明＋引用
+- tech-dont-using-oop-frontend-ddd.mdx (1) - 長文技術記事
+- photography.mdx (1) - 個人的な物語
+- mental-models-life.mdx (1) - 広範な個人哲学フレームワーク
+- photography-gr-iiix.mdx (1) - 主に画像コンテンツ
+
 ### コンテンツ移行のワークフロー
 1. **フォーマット変換**: テーブル形式→箇条書き形式（Reflectはテーブル非対応）
 2. **Reflect作成**: 変換したコンテンツでReflectページを作成
