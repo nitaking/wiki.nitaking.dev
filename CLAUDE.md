@@ -13,24 +13,38 @@ Next.jsとfumadocsで構築されたデジタルガーデンプロジェクト�
 ## プロジェクト構造
 
 ### コンテンツ構成
-- reflectの後悔リンクはindex.mdxに追加することが基本フローです。
-- それ以外の個別ページは、個別に作成します。
-- ページやディレクトリは最小限に収める予定で、以下のページ郡の一部はreflectの公開リンクに置き換え予定です。
-- これらの構成は、nikiv.devのカテゴリ構造にインスパイアされています。
+- **フラット構造**: nikiv.devにインスパイアされた完全フラット構造を採用
+- **Reflect連携**: 動的コンテンツはReflectリンクとしてindex.mdxに統合
+- **自動ナビゲーション**: meta.jsonによる手動管理で、デジタルガーデンらしい階層を実現
+- **ファイル命名規則**: カテゴリプレフィックス（tech-, thoughts-, gaming-等）で整理
 
 ```
 content/docs/
-├── index.mdx                 # メイン概要ページ
-├── digital-garden/           # デジタルガーデン手法
-├── cheatsheet/              # クイックリファレンスガイド
-├── knowledge/               # 核となる知識領域
-│   ├── analytics/          # 分析ツールと手法
-│   ├── mental-models/      # 思考フレームワーク
-│   └── pkm/               # 個人知識管理
-├── tech/                   # 技術ドキュメント
-├── photography/            # 写真関連コンテンツ
-├── thought/                # 個人的な考察
-└── workflow/               # 開発ワークフロー
+├── index.mdx                           # メイン概要ページ（Reflectリンク集約）
+├── site-history.mdx                    # サイト履歴
+├── meta.json                          # ナビゲーション構造定義
+├── 🌱 Knowledge Garden
+│   ├── digital-garden-nolebase.mdx
+│   └── mental-models-life.mdx
+├── 🛠️ Tech (重要度順)
+│   ├── tech-decision-making-framework.mdx
+│   ├── tech-api-first-mandate-strategy.mdx
+│   ├── tech-twelve-factor-app.mdx
+│   ├── tech-kiss-principle.mdx
+│   └── ... (その他tech-*.mdx)
+├── 📸 Photography
+│   ├── photography.mdx
+│   └── photography-gr-iiix.mdx
+├── 🎮 Gaming
+│   ├── gaming-chart-per-deck-theme.mdx
+│   └── gaming-tournament-tool.mdx
+├── 💭 Thoughts
+│   └── thoughts-*.mdx (6ファイル)
+├── ⚙️ Workflow
+│   └── workflow-dev-workflow.mdx
+└── 📋 Templates (付属的情報)
+    ├── adr-architecture-decision-records.mdx
+    └── postmortem.mdx
 ```
 
 ### 主要機能
@@ -42,17 +56,17 @@ content/docs/
 ## 開発
 
 ### コマンド
-- `npm run dev` - Turboを使用した開発サーバー起動
-- `npm run build` - プロダクション用ビルド
-- `npm run start` - プロダクションサーバー起動
-- `npm run postinstall` - fumadocsでMDXファイルを処理
+- `bun run dev` - 開発サーバー起動
+- `bun run build` - プロダクション用ビルド
+- `bun run start` - プロダクションサーバー起動
+- `bun run postinstall` - fumadocsでMDXファイルを処理・ナビゲーション更新
 
 ### コンテンツガイドライン
-- 全コンテンツファイルはMDX形式を使用
-- `title`と`description`を含むfrontmatterを含める
-- nikiv.devにインスパイアされたカテゴリ構造に従う
-- 関連概念間を内部リンクで接続
-- パブリックReflectノートを参照・埋め込み可能
+- **ファイル配置**: 全て`/content/docs/`直下にフラット配置
+- **命名規則**: カテゴリプレフィックス使用（tech-, thoughts-, gaming-等）
+- **フォーマット**: MDX形式、`title`と`description`を含むfrontmatter必須
+- **ナビゲーション**: meta.jsonで手動管理、重要度順に配置
+- **Reflect統合**: 動的コンテンツは全てReflectリンクとしてindex.mdxに集約
 
 ## Reflect.app連携
 
@@ -125,12 +139,20 @@ nikiv.devモデルに従って：
 - **開発**: 高速開発サーバー用Turbo
 
 ## 移行の背景
-このサイトは3回目の反復を表しています：
+このサイトは4回目の重要な反復を表しています：
 1. **wiki.nitaking.dev**（Quartzベース）
 2. **nitaking.gitbook.io**（GitBook）
-3. **現在**（fumadocsベース）
+3. **fumadocsベース**（ディレクトリ構造）
+4. **現在**（フラット構造 + Reflect統合）
 
-現在のアーキテクチャは、包括的なデジタルガーデン体験のための静的サイトパフォーマンスと動的Reflect.app統合のバランスを取っています。
+**2024年12月のフラット化移行で実現：**
+- 37ファイル → 28ファイルに削減
+- 13ディレクトリ → 0ディレクトリ（完全フラット化）
+- 12ファイルをReflectに移行（動的コンテンツ化）
+- デジタルガーデンらしい階層ナビゲーション
+- メンテナンスフリーな自動コンテンツ認識
+
+現在のアーキテクチャは、nikiv.devにインスパイアされたシンプルさと、包括的なデジタルガーデン体験のバランスを実現しています。
 
 ## デプロイメント & パフォーマンス
 - 最適なパフォーマンスのためのNext.js App Routerベース
