@@ -10,7 +10,12 @@
       "Bash(rm:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:reflect.site)",
+      "WebFetch(domain:reflect.site)",
+      "WebFetch(domain:reflect.site)",
+      "WebFetch(domain:reflect.site)",
+      "WebFetch(domain:reflect.site)"
     ],
     "deny": []
   }
