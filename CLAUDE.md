@@ -33,7 +33,6 @@ content/docs/
 ├── next-tailwind-styles.mdx
 ├── photography.mdx                     # 📸 Photography
 ├── photography-gr-iiix.mdx
-├── thoughts-pet-insurance.mdx          # 💭 Thoughts
 ├── workflow-dev-workflow.mdx           # ⚙️ Workflow
 ├── adr-architecture-decision-records.mdx # 📋 Templates
 └── postmortem.mdx
