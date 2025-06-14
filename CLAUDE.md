@@ -57,17 +57,27 @@ content/docs/
 ## Reflect.app連携
 
 ### 現在のReflectリンク（index.mdxより）
-- AI / Deep Research Best Practice
-- AI Agent
-- LLM Prompt Cache  
-- Game Tournament Tool
-- カーボローディング
+**🤖 AI & Machine Learning（7項目）**
+- AI / Deep Research Best Practice, AI, AI Agent, AI Agent Shorts Video Workflow, AI Tools, LLM Prompt Cache, Prompt Engineering
+
+**🛠️ Development & Tools（9項目）**
+- Auth Refresh Token, Data Fetch, Dev Tools, Given – When – Then, ProxySQL Tips, RayCast, React Practice, Scaffolding Tool, Selected Text Event
+
+**📋 Workflow & Productivity（3項目）**
+- Cross Post Tool, Game Tournament Tool, Make vs Zapier
+
+**💭 Philosophy & Design（2項目）**
+- Design Ideology, Getting Real
+
+**🌱 Life & Interests（3項目）**
+- Coffee, Fujifilm, カーボローディング
 
 ### Reflectリンクの更新
-- タイトルとリンクがある場合は、そのリンクを下に、index.mdxに追加
-- 並び順はアルファベット順をベースに、わかりやすい順序で配置
+- タイトルとリンクがある場合は、適切なカテゴリ内にindex.mdxに追加
+- 5つのカテゴリに分類：AI & Machine Learning, Development & Tools, Workflow & Productivity, Philosophy & Design, Life & Interests
+- 各カテゴリ内はアルファベット順で配置
 - タイトルがない場合は、リンク情報を元に
-  - タイトルを生成し、リンクを追加
+  - タイトルを生成し、適切なカテゴリに追加
   - タイトルは、リンクの内容を反映したものにする
 
 ### MDX→Reflect移行の判断基準
