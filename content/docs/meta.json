@@ -2,6 +2,7 @@
   "pages": [
     "index",
     "site-history",
+    "uses",
     "---🌱 Knowledge Garden---",
     "mental-models-life",
     "---🛠️ Tech---",
@@ -15,8 +16,12 @@
     "---📸 Photography---",
     "photography",
     "photography-gr-iiix",
+    "photography-x-h2",
     "---⚙️ Workflow---",
     "workflow-dev-workflow",
+    "workflow-wrap-model-method",
+    "---💭 Thoughts---",
+    "thoughts-digital-garden-philosophy",
     "---📋 Templates---",
     "adr-architecture-decision-records",
     "postmortem"
