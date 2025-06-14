@@ -23,28 +23,23 @@ content/docs/
 ├── index.mdx                           # メイン概要ページ（Reflectリンク集約）
 ├── site-history.mdx                    # サイト履歴
 ├── meta.json                          # ナビゲーション構造定義
-├── 🌱 Knowledge Garden
-│   ├── digital-garden-nolebase.mdx
-│   └── mental-models-life.mdx
-├── 🛠️ Tech (重要度順)
-│   ├── tech-decision-making-framework.mdx
-│   ├── tech-api-first-mandate-strategy.mdx
-│   ├── tech-twelve-factor-app.mdx
-│   ├── tech-kiss-principle.mdx
-│   └── ... (その他tech-*.mdx)
-├── 📸 Photography
-│   ├── photography.mdx
-│   └── photography-gr-iiix.mdx
-├── 🎮 Gaming
-│   ├── gaming-chart-per-deck-theme.mdx
-│   └── gaming-tournament-tool.mdx
-├── 💭 Thoughts
-│   └── thoughts-*.mdx (6ファイル)
-├── ⚙️ Workflow
-│   └── workflow-dev-workflow.mdx
-└── 📋 Templates (付属的情報)
-    ├── adr-architecture-decision-records.mdx
-    └── postmortem.mdx
+├── mental-models-life.mdx              # 🌱 Knowledge Garden
+├── tech-decision-making-framework.mdx  # 🛠️ Tech
+├── tech-api-first-mandate-strategy.mdx
+├── tech-barrel-files.mdx
+├── tech-dont-using-oop-frontend-ddd.mdx
+├── tech-online-ddl-mysql.mdx
+├── tech-swr.mdx
+├── next-tailwind-styles.mdx
+├── photography.mdx                     # 📸 Photography
+├── photography-gr-iiix.mdx
+├── thoughts-pet-insurance.mdx          # 💭 Thoughts
+├── workflow-dev-workflow.mdx           # ⚙️ Workflow
+├── adr-architecture-decision-records.mdx # 📋 Templates
+└── postmortem.mdx
+
+# Reflectに移行済み (動的コンテンツ化)
+# - 20+ ファイルがReflectリンクとしてindex.mdxに集約
 ```
 
 ### 主要機能
@@ -74,21 +69,27 @@ content/docs/
 **🤖 AI & Machine Learning（7項目）**
 - AI / Deep Research Best Practice, AI, AI Agent, AI Agent Shorts Video Workflow, AI Tools, LLM Prompt Cache, Prompt Engineering
 
-**🛠️ Development & Tools（9項目）**
-- Auth Refresh Token, Data Fetch, Dev Tools, Given – When – Then, ProxySQL Tips, RayCast, React Practice, Scaffolding Tool, Selected Text Event
+**🛠️ Development & Tools（21項目）**
+- Analytics Tools, Auth Refresh Token, Claude Code, CSS Modules, Data Fetch, Dev Tools, Given – When – Then, KISS (Keep it Simple, Stupid), Nolebase, NPM, ProxySQL Tips, RayCast, React Practice, Recommend Stack, Recommend Workflow, Scaffolding Tool, Selected Text Event, Style Guide, Tinybird, Tinylytics, Twelve-Factor App
 
-**📋 Workflow & Productivity（3項目）**
-- Cross Post Tool, Game Tournament Tool, Make vs Zapier
+**📋 Workflow & Productivity（5項目）**
+- Cross Post Tool, Game Tournament Tool, How To Create Chart Per Deck Theme, Make vs Zapier, Podcast Tips
 
 **💭 Philosophy & Design（2項目）**
 - Design Ideology, Getting Real
 
-**🌱 Life & Interests（3項目）**
-- Coffee, Fujifilm, カーボローディング
+**🧠 Knowledge Management（7項目）**
+- Anytype vs Capacities, Capacities, Heptabase, Mindmap Tools, Note App Histories, 結晶性知能, 流動性知能
+
+**📸 Photography（2項目）**
+- Fujifilm, 電子シャッターとメカシャッター
+
+**🌱 Life & Interests（4項目）**
+- Coffee, Water Loading, エアコン掃除, カーボローディング
 
 ### Reflectリンクの更新
 - タイトルとリンクがある場合は、適切なカテゴリ内にindex.mdxに追加
-- 5つのカテゴリに分類：AI & Machine Learning, Development & Tools, Workflow & Productivity, Philosophy & Design, Life & Interests
+- 6つのカテゴリに分類：AI & Machine Learning, Development & Tools, Workflow & Productivity, Philosophy & Design, Knowledge Management, Photography, Life & Interests
 - 各カテゴリ内はアルファベット順で配置
 - タイトルがない場合は、リンク情報を元に
   - タイトルを生成し、適切なカテゴリに追加
