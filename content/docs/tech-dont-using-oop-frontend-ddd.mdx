@@ -16,9 +16,9 @@ ReactはRe-renderingの仕組みがオブジェクトの場合、参照等価で
 
 個人的には言語仕様として相性が悪いものは採用しないほうがシンプルであると考えていますが、その前提でOOP/DDDを採用するなら良いと思います。
 
-逆に、関数型としての[DDD](https://wiki.nitaking.dev/thoughts/DDD)や Immutable な取り回しを前提としたものも良いと考えています。が、DDDにおけるビジネスロジックはバックエンドに集約させる方が良いと考えており、Frontend（React）もプレゼンテーション層の一部のViewであると捉えるのが今の支持です。
+逆に、関数型としてのDDDや Immutable な取り回しを前提としたものも良いと考えています。が、DDDにおけるビジネスロジックはバックエンドに集約させる方が良いと考えており、Frontend（React）もプレゼンテーション層の一部のViewであると捉えるのが今の支持です。
 
-昨今はAPI RequestのCache戦略として [TanStack Query](https://wiki.nitaking.dev/thoughts/TanStack-Query) や [SWR](https://wiki.nitaking.dev/thoughts/SWR) などでGraphQLのように、バックエンドのデータストアをクライアントのStoreとして扱えるようなキャッシュ機構が増えています。
+昨今はAPI RequestのCache戦略として TanStack Query や [SWR](./tech-swr) などでGraphQLのように、バックエンドのデータストアをクライアントのStoreとして扱えるようなキャッシュ機構が増えています。
 
 極力ViewとしてのReactアプリケーションと割り切ると、クライアントアプリケーション内でRoot的なStore管理をする必要が減り、Request CacheとLocal Stateの最小２つで管理することができうると考えています。
 
