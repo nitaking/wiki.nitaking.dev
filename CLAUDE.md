@@ -203,54 +203,41 @@ nikiv.devモデルに従って：
 
 ## GitBook移行候補評価（2025年6月）
 
-### 高価値移行候補（高優先度）
+### 移行完了済み（2025年6月15日）
 
-#### 1. **Workflow セクション**
-- **Dev Workflow** - 開発プロセスとベストプラクティス
-- **Knowledge Workflow** - PKM手法と知識管理プロセス
-- **Book Workflow** - 読書と学習の方法論
-- **推奨形式**: MDX（構造化されたプロセス文書として）
-- **移行理由**: 現在のworkflow-*ファイルを補完、体系的な手法論
+#### ✅ **Workflow セクション**
+- **Knowledge Workflow** - PKM手法と知識管理プロセス（画像付き）
+- **Book Workflow** - 読書と学習の方法論（画像付き）
+- **画像管理**: nitaking/mediaリポジトリに移行完了
+- **ダークモード対応**: 白背景スタイリング追加
 
-#### 2. **CheatSheet セクション**
-- **Git CheatSheet** - Git コマンドとワークフロー
-- **Next.js関連ガイド** - Tailwindとの共存等
-- **推奨形式**: MDX（参照性重視）
-- **移行理由**: 実用的な技術リファレンス、現在のサイトに不足
+#### ✅ **CheatSheet セクション**  
+- **Git CheatSheet** - 包括的なGitコマンドリファレンス作成
+  - GitBookの最小限コンテンツ（autosquash設定）を大幅拡張
+  - 日常コマンド、ブランチ操作、リベース、ワークフローパターン追加
+- **既存移行済み**: Next.js+Tailwind、ADR、Postmortem等
 
-#### 3. **My Oshi (Tech Preferences)**
-- **技術スタック推奨** - 個人的な技術選択理由
-- **推奨形式**: Reflect統合（既存Recommend Stackと統合）
-- **移行理由**: 現在のReflectリンクを拡充
+#### ✅ **開発ワークフロー**
+- Dev Workflow - 既に完全移行済み（重複なし）
 
-### 中価値移行候補（要検討）
+#### ✅ **My Oshi（技術選好）**
+- 既存Reflectリンクでカバー済み
+- Schema-Driven Development、gRPCは今後Reflectに追加検討
 
-#### 4. **Awesome List セクション**
+### 今後の移行候補（未対応）
+
+#### 1. **Awesome List セクション**
 - **Dev Tools** - 開発ツール集
 - **Tools** - 一般ツール集  
 - **AI Tools** - AI関連ツール集
 - **推奨形式**: Reflect統合（既存リンクとの重複確認要）
 - **移行理由**: 既存Reflectリンクとの差分があれば価値あり
 
-#### 5. **Frontend/Infrastructure 技術コンテンツ**
+#### 2. **Frontend/Infrastructure 技術コンテンツ**
 - **コードレビューガイドライン**
-- **インフラストラクチャ設定**
+- **インフラストラクチャ設定**  
 - **推奨形式**: MDX（技術詳細として）
 - **移行理由**: 現在の技術コンテンツを補完
-
-### 低価値（移行対象外）
-
-#### 6. **既存重複コンテンツ**
-- **PKM関連** - 既にReflectリンクで十分
-- **Photography** - 既にMDXファイル存在
-- **Mental Models** - 既存mental-models-life.mdxでカバー
-
-### 移行戦略
-
-1. **手動確認必要**: GitBookの動的コンテンツのため手動での内容確認
-2. **優先順位**: Workflow → CheatSheet → My Oshi → Awesome Lists
-3. **重複回避**: 既存Reflectリンクとの差分を事前確認
-4. **形式判断**: 構造化プロセス=MDX、動的リスト=Reflect
 
 ## Meta
 - 日本語で会話する
