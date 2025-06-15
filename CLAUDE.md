@@ -61,6 +61,7 @@ content/docs/
 - **フォーマット**: MDX形式、`title`と`description`を含むfrontmatter必須
 - **ナビゲーション**: meta.jsonで手動管理、重要度順に配置
 - **Reflect統合**: 動的コンテンツは全てReflectリンクとしてindex.mdxに集約
+- **AI編集表示**: frontmatterに`ai_edited: Claude`を追加すると、ページ下部に「🤖 Edited with assistance from Claude」が表示される
 
 ## Reflect.app連携
 
