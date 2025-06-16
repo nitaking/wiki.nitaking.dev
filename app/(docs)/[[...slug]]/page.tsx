@@ -19,7 +19,7 @@ export default async function Page(props: {
   const MDXContent = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full} lastUpdate={new Date(page.data.lastModified)}>
+    <DocsPage toc={page.data.toc} full={page.data.full} lastUpdate={page.data.lastModified ? new Date(page.data.lastModified) : undefined}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
