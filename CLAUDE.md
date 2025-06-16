@@ -61,7 +61,12 @@ content/docs/
 - **フォーマット**: MDX形式、`title`と`description`を含むfrontmatter必須
 - **ナビゲーション**: meta.jsonで手動管理、重要度順に配置
 - **Reflect統合**: 動的コンテンツは全てReflectリンクとしてindex.mdxに集約
-- **AI編集表示**: frontmatterに`ai_edited: Claude`を追加すると、ページ下部に「🤖 Edited with assistance from Claude」が表示される
+- **AI編集表示**: AI編集したMDXファイルは、ファイル末尾に以下を追加してフッターコンポーネントを表示する
+  ```mdx
+  import { AIEditedFooter } from '@/components/ai-edited-footer';
+  
+  <AIEditedFooter />
+  ```
 
 ## Reflect.app連携
 
@@ -239,6 +244,32 @@ nikiv.devモデルに従って：
 - **インフラストラクチャ設定**  
 - **推奨形式**: MDX（技術詳細として）
 - **移行理由**: 現在の技術コンテンツを補完
+
+## Reflect Pageマスター同期ワークフロー
+
+### 基本原則
+- **Reflect pageをマスター**として扱う
+- MDXはReflect pageの構造化表現として位置づけ
+- 指示があれば、Reflect pageの内容を基にMDXを更新
+
+### 同期タスク手順
+1. **Reflect page分析**: WebFetchでReflect pageの最新内容を取得
+2. **差分確認**: 既存MDXファイルとの内容比較
+3. **MDX更新**: Reflect pageの構造・内容に合わせてMDXを同期
+4. **リンク保持**: 元のReflectリンクをCalloutで明記維持
+
+### 同期対象ファイル
+現在Reflect pageがマスターとして存在するMDXファイル：
+- `tech-go-goroutine-patterns.mdx` → [Reflect Goroutine Guide](https://reflect.site/g/nitaking/goroutine/38fb9940124f426e8be752e7a09afa16)
+
+### 同期実行例
+```
+指示: "goroutineガイドの内容をReflect pageと同期して"
+→ 1. WebFetchでReflect page取得
+→ 2. MDXファイル読み込み・差分確認  
+→ 3. 必要に応じてMDXを更新
+→ 4. 変更点を報告
+```
 
 ## Meta
 - 日本語で会話する

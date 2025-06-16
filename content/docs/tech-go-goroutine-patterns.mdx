@@ -1,0 +1,221 @@
+---
+title: 'Go Goroutine Best Practices'
+description: 'Goルーチンの安全なパターンと並行処理のベストプラクティス'
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Go Goroutine Best Practices
+
+Goにおけるgoroutineの安全な実装パターンと並行処理のベストプラクティスガイド。
+
+<Callout type="info">
+元の記事: [Reflect - Goroutine Guide](https://reflect.site/g/nitaking/goroutine/38fb9940124f426e8be752e7a09afa16)
+</Callout>
+
+## Goroutine完了の考慮事項
+
+### 危険なパターン（アンチパターン）
+
+```go
+func dangerousExample() []string {
+    urls := []string{"http://api1.com", "http://api2.com", "http://api3.com"}
+    results := make([]string, len(urls))
+
+    for i, url := range urls {
+        go func(index int, u string) {
+            resp := fetchData(u)  // HTTP API call
+            results[index] = resp
+        }(i, url)
+    }
+
+    return results  // ❌ goroutineの完了を待たずに戻る
+}
+```
+
+**問題点:**
+- goroutineの完了前に関数が終了
+- 空の配列が返される可能性
+- HTTPリクエストが中断される可能性
+
+## 安全な実装パターン
+
+### パターン1: チャネルでの同期
+
+```go
+func safeChannelPattern() []string {
+    urls := []string{"http://api1.com", "http://api2.com", "http://api3.com"}
+
+    resultCh := make(chan struct{
+        index int
+        data  string
+    }, len(urls))
+
+    for i, url := range urls {
+        go func(index int, u string) {
+            resp := fetchData(u)
+            resultCh <- struct{
+                index int
+                data  string
+            }{index, resp}
+        }(i, url)
+    }
+
+    results := make([]string, len(urls))
+    for i := 0; i < len(urls); i++ {
+        result := <-resultCh  // ブロッキング操作
+        results[result.index] = result.data
+    }
+
+    return results
+}
+```
+
+### パターン2: WaitGroupでの同期
+
+```go
+func safeWaitGroupPattern() []string {
+    urls := []string{"http://api1.com", "http://api2.com", "http://api3.com"}
+
+    var wg sync.WaitGroup
+    var mu sync.Mutex
+    results := make([]string, len(urls))
+
+    for i, url := range urls {
+        wg.Add(1)
+        go func(index int, u string) {
+            defer wg.Done()
+            
+            resp := fetchData(u)
+            
+            mu.Lock()
+            results[index] = resp
+            mu.Unlock()
+        }(i, url)
+    }
+
+    wg.Wait()  // すべてのgoroutineの完了を待機
+    return results
+}
+```
+
+### パターン3: セマフォでの同時実行数制御
+
+```go
+func semaphorePattern() []string {
+    urls := []string{"http://api1.com", "http://api2.com", "http://api3.com"}
+    
+    // 同時実行数を2に制限
+    semaphore := make(chan struct{}, 2)
+    
+    var wg sync.WaitGroup
+    var mu sync.Mutex
+    results := make([]string, len(urls))
+
+    for i, url := range urls {
+        wg.Add(1)
+        
+        go func(index int, u string) {
+            defer wg.Done()
+            
+            semaphore <- struct{}{}  // セマフォ取得
+            defer func() { <-semaphore }()  // セマフォ解放
+            
+            resp := fetchData(u)
+            
+            mu.Lock()
+            results[index] = resp
+            mu.Unlock()
+        }(i, url)
+    }
+
+    wg.Wait()
+    return results
+}
+```
+
+### パターン4: Contextでのタイムアウト制御
+
+```go
+func contextTimeoutPattern(ctx context.Context) ([]string, error) {
+    urls := []string{"http://api1.com", "http://api2.com", "http://api3.com"}
+    
+    // 5秒のタイムアウトを設定
+    ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+    defer cancel()
+    
+    resultCh := make(chan struct{
+        index int
+        data  string
+        err   error
+    }, len(urls))
+
+    for i, url := range urls {
+        go func(index int, u string) {
+            resp, err := fetchDataWithContext(ctx, u)
+            
+            select {
+            case resultCh <- struct{
+                index int
+                data  string
+                err   error
+            }{index, resp, err}:
+            case <-ctx.Done():
+                return  // タイムアウトまたはキャンセル
+            }
+        }(i, url)
+    }
+
+    results := make([]string, len(urls))
+    for i := 0; i < len(urls); i++ {
+        select {
+        case result := <-resultCh:
+            if result.err != nil {
+                return nil, result.err
+            }
+            results[result.index] = result.data
+        case <-ctx.Done():
+            return nil, ctx.Err()
+        }
+    }
+
+    return results, nil
+}
+```
+
+## 用途別推奨パターン
+
+<Callout type="tip">
+**API並列呼び出し**: Context + Semaphore  
+**データ処理**: WaitGroup  
+**ファイル処理**: Semaphore  
+**リアルタイム処理**: Channels
+</Callout>
+
+### API並列呼び出し
+- Context + Semaphoreの組み合わせ
+- タイムアウト制御と同時実行数制限
+
+### データ処理
+- WaitGroupによる簡潔な同期
+- エラーハンドリングが重要
+
+### ファイル処理
+- Semaphoreでリソース使用量制御
+- I/Oボトルネックの回避
+
+### リアルタイム処理
+- Channelsによる非同期通信
+- バッファサイズの適切な設定
+
+## まとめ
+
+Goroutineの安全な使用には適切な同期メカニズムが必要です。用途に応じて最適なパターンを選択し、リソースリークやデッドロックを避けることが重要です。
+
+<Callout type="warn">
+goroutineの完了を待たずに関数を終了することは、予期しない動作やリソースリークの原因となります。
+</Callout>
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
