@@ -24,18 +24,28 @@ content/docs/
 ├── site-history.mdx                    # サイト履歴
 ├── meta.json                          # ナビゲーション構造定義
 ├── mental-models-life.mdx              # 🌱 Knowledge Garden
+├── digital-garden-philosophy.mdx       # 💭 Thoughts
+├── thoughts-digital-garden-philosophy.mdx
 ├── tech-decision-making-framework.mdx  # 🛠️ Tech
 ├── tech-api-first-mandate-strategy.mdx
 ├── tech-barrel-files.mdx
 ├── tech-dont-using-oop-frontend-ddd.mdx
+├── tech-go-goroutine-patterns.mdx
 ├── tech-online-ddl-mysql.mdx
 ├── tech-swr.mdx
+├── fumadocs-page-enhancements.mdx
 ├── next-tailwind-styles.mdx
 ├── photography.mdx                     # 📸 Photography
 ├── photography-gr-iiix.mdx
+├── photography-x-h2.mdx
 ├── workflow-dev-workflow.mdx           # ⚙️ Workflow
+├── workflow-book-workflow.mdx
+├── workflow-knowledge-workflow.mdx
+├── workflow-wrap-model-method.mdx
 ├── adr-architecture-decision-records.mdx # 📋 Templates
-└── postmortem.mdx
+├── postmortem.mdx
+├── cheatsheet-git.mdx                  # 📋 CheatSheet
+└── uses.mdx                            # ⚙️ Setup
 
 # Reflectに移行済み (動的コンテンツ化)
 # - 20+ ファイルがReflectリンクとしてindex.mdxに集約
