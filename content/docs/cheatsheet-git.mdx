@@ -123,6 +123,13 @@ git reset --hard HEAD~1    # Undo commit, discard changes
 git revert <hash>          # Create reverting commit
 ```
 
+### Refreshing .gitignore
+```bash
+git rm -r --cached .       # Remove all cached files
+git add .                  # Re-add files respecting new .gitignore
+```
+.gitignore更新後に既存の追跡ファイルに新しいルールを適用する際に使用。
+
 ## Useful Aliases
 
 ```bash
