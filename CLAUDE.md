@@ -281,5 +281,42 @@ nikiv.devモデルに従って：
 → 4. 変更点を報告
 ```
 
+## Deep Research管理方針
+
+### 概要
+ChatGPTやClaude Researchで深掘りしたトピックは、`deep-research-collection.mdx`にまとめる。
+
+### リンクの分類判断
+**Deep Research対象**:
+- ChatGPT/Claudeでの探求・分析・調査
+- 問いを立てて深掘りしたもの
+- 複数の視点で分析したもの
+- 新しい洞察や気づきがあるもの
+
+**Reflectリンク対象**:
+- ツール紹介・比較
+- 技術設計・提案
+- チートシート・リファレンス
+- 設定やTips集
+
+### 作業手順
+1. リンクの内容をWebFetchで確認
+2. Deep Research vs Reflectリンクを判断
+3. Deep Researchの場合：
+   - 事実ベースのサマリーをAIが作成
+   - `deep-research-collection.mdx`に追加
+4. Reflectリンクの場合：
+   - `index.mdx`の適切なセクションにアルファベット順で追加
+
+### フォーマット
+超シンプル形式：
+```markdown
+**[トピックタイトル](リンク)** _(YYYY/MM)_  
+一行でサマリー。追加の気づきはここに。
+```
+
+- 事実ベースのサマリーはAIが記載
+- 個人的な気づきや意見はユーザーが追記
+
 ## Meta
 - 日本語で会話する

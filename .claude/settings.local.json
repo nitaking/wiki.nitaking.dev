@@ -17,7 +17,8 @@
       "WebFetch(domain:reflect.site)",
       "WebFetch(domain:reflect.site)",
       "WebFetch(domain:nitaking-quartz-wiki.pages.dev)",
-      "WebFetch(domain:nitaking.gitbook.io)"
+      "WebFetch(domain:nitaking.gitbook.io)",
+      "WebFetch(domain:chatgpt.com)"
     ],
     "deny": []
   }
