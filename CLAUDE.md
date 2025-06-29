@@ -1,7 +1,150 @@
-# デジタルガーデンプロジェクト - wiki.nitaking.dev
+# CLAUDE.md
 
-## 概要
-Next.jsとfumadocsで構築されたデジタルガーデンプロジェクトです。nikiv.devにインスパイアされており、Reflect.appと連携した個人的なナレッジベースとして機能します。
+This file provides guidance to Claude Code (claude.ai/code) when working with this digital garden repository.
+
+## Important
+
+- ALL instructions within this document MUST BE FOLLOWED, these are not optional unless explicitly stated.
+- DO NOT edit more code than you have to.
+- DO NOT WASTE TOKENS, be succinct and concise.
+- DO NOT create files unless they're absolutely necessary for achieving your goal.
+- ALWAYS prefer editing existing files in the codebase.
+- NEVER proactively create documentation files (*.md) or README files unless explicitly requested.
+
+## Digital Garden System Guidelines
+
+This document provides specific guidance for maintaining and evolving the wiki.nitaking.dev digital garden project.
+
+### Project Overview
+
+A personal knowledge base built with Next.js and fumadocs, inspired by nikiv.dev, integrating with Reflect.app for dynamic content management.
+
+### Content Management Priority Rules
+
+- IMMEDIATE EXECUTION: When asked to create or update content, proceed without unnecessary clarification
+- FLAT STRUCTURE: All content lives directly in `/content/docs/` - no subdirectories
+- NAMING CONVENTION: Use category prefixes (tech-, thoughts-, gaming-, etc.)
+- REFLECT FIRST: Consider if content should be a Reflect link rather than MDX file
+- MINIMAL FRONTMATTER: Only `title` and `description` required
+
+### Content Creation Workflow
+
+**IMMEDIATE EXECUTION:** Upon ANY content request:
+
+1. **Determine Format**: Assess if content should be MDX or Reflect link
+2. **File Creation**: If MDX, create in `/content/docs/` with proper prefix
+3. **Navigation Update**: Update `meta.json` to include new content
+4. **Reflect Links**: If dynamic content, add to `index.mdx` alphabetically
+5. **AI Footer**: If AI-edited, add `<AIEditedFooter />` component
+
+### MDX vs Reflect Decision Matrix
+
+**Use Reflect for:**
+- Tool lists and comparisons
+- Frequently updated references
+- Tips and settings collections
+- Dynamic content that changes often
+
+**Use MDX for:**
+- Long-form technical documentation
+- Content with extensive code examples
+- Structured tutorials and guides
+- Static reference material
+
+### Ultra-Fast Content Updates
+
+**When updating content:**
+- Launch parallel reads of related files
+- Use MultiEdit for multiple changes to same file
+- Batch navigation updates with content changes
+- Skip unnecessary file exploration
+
+### Token Optimization Guidelines
+
+- Strip comments when reading code for analysis
+- Filter logging statements during code review
+- Use Task tool for broad searches instead of multiple Grep/Glob
+- Batch WebFetch calls when checking multiple Reflect pages
+
+### Development Guidelines
+
+- **Framework**: Next.js 15 with App Router patterns
+- **Styling**: Tailwind CSS only, no custom CSS files
+- **MDX**: Use fumadocs components and conventions
+- **Search**: Maintain Orama index compatibility
+- **Images**: Store in nitaking/media repository, not locally
+
+### Code Style Patterns
+
+- NO comments unless explicitly requested
+- Follow existing component patterns in codebase
+- Use TypeScript strictly
+- Preserve existing formatting and conventions
+- AI-edited files require footer component
+
+### Common Tasks
+
+**Adding Reflect Links:**
+1. WebFetch the Reflect page to understand content
+2. Determine appropriate category in index.mdx
+3. Add link alphabetically within category
+4. Update item count in category header
+
+**Creating New MDX Content:**
+1. Create file with category prefix in `/content/docs/`
+2. Add minimal frontmatter (title, description)
+3. Update meta.json for navigation
+4. Add AIEditedFooter if AI-generated
+
+**Content Migration to Reflect:**
+1. Convert tables to bullet lists (Reflect doesn't support tables)
+2. Create Reflect page with converted content
+3. Add link to index.mdx
+4. Remove original MDX file
+5. Commit with simple message
+
+### Reflect Integration Rules
+
+- ALWAYS maintain alphabetical order within categories
+- Update category item counts when adding/removing
+- Categories: AI & Machine Learning, Development & Tools, Workflow & Productivity, Philosophy & Design, Knowledge Management, Photography, Life & Interests
+- Include links in appropriate existing categories only
+
+### Git Workflow
+
+- Use co-authored commits for AI edits
+- Simple, clear commit messages
+- Never update git config
+- Don't push unless explicitly requested
+
+### Forbidden Actions
+
+- Creating subdirectories in `/content/docs/`
+- Adding complex frontmatter beyond title/description
+- Creating test files or examples
+- Modifying core fumadocs configuration
+- Adding custom CSS or style files
+
+### Performance Considerations
+
+- Static generation preferred
+- Minimize client-side JavaScript
+- Use fumadocs built-in components
+- Maintain fast search index
+
+### When Asked About Capabilities
+
+- First check docs at https://docs.anthropic.com/en/docs/claude-code
+- Use WebFetch to get accurate, current information
+- Never guess about features or limitations
+
+## Meta
+
+- Alwayes Communicate in Japanese (日本語) 
+- Be direct and concise
+- Focus on the specific task at hand
+- Provide minimal explanations unless requested
+
 
 ## アーキテクチャ
 - **フレームワーク**: Next.js 15.3.1 with App Router
