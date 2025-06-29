@@ -5,11 +5,11 @@
 @import 'fumadocs-ui/css/neutral.css';
 
 /* Fix margin between View on GitHub button and content */
-[data-docs-body] > a[href*="github.com"] {
+.prose > a[href*="github.com"] {
   margin-bottom: 1.5rem;
 }
 
-/* Alternative approach - add margin to content after GitHub button */
-[data-docs-body] > a[href*="github.com"] + * {
-  margin-top: 1.5rem !important;
+/* Fix margin Description */
+article > p {
+  @apply mb-4;
 }
