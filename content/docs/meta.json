@@ -31,7 +31,9 @@
     "deep-research-collection",
     "---📋 Templates---",
     "adr-architecture-decision-records",
-    "postmortem"
+    "postmortem",
+    "---🤖 Claude---",
+    "claude/claude-config-list"
   ],
   "root": true,
   "defaultOpen": false
