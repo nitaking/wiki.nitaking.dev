@@ -13,6 +13,9 @@
     "tech-online-ddl-mysql",
     "tech-swr",
     "next-tailwind-styles",
+    "---📖 CheatSheet---",
+    "cheatsheet-git",
+    "cheatsheet-html",
     "---📸 Photography---",
     "photography",
     "photography-gr-iiix",
@@ -27,10 +30,7 @@
     "deep-research-collection",
     "---📋 Templates---",
     "adr-architecture-decision-records",
-    "postmortem",
-    "---📖 CheatSheet---",
-    "cheatsheet-git",
-    "cheatsheet-html"
+    "postmortem"
   ],
   "root": true,
   "defaultOpen": false
