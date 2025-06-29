@@ -29,7 +29,8 @@
     "adr-architecture-decision-records",
     "postmortem",
     "---📖 CheatSheet---",
-    "cheatsheet-git"
+    "cheatsheet-git",
+    "cheatsheet-html"
   ],
   "root": true,
   "defaultOpen": false
