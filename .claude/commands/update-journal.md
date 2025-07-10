@@ -1,0 +1,5 @@
+- update journal from RSS
+  - https://sizu.me/nitaking/rss から最新の記事を取得
+  - content/docs/journal.mdx を更新
+  - 記事は日付順（新しい順）に整理
+  - 各記事のタイトル、日付、サマリーを含める
