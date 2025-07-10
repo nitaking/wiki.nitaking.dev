@@ -17,7 +17,9 @@
       "WebFetch(domain:*)",
       "WebFetch(domain:zenn.dev)",
       "WebFetch(domain:icemenubar.app)",
-      "WebFetch(domain:www.figma.com)"
+      "WebFetch(domain:www.figma.com)",
+      "WebFetch(domain:chatgpt.com)",
+      "WebFetch(domain:sizu.me)"
     ],
     "deny": []
   }
