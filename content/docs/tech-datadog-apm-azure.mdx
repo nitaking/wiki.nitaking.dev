@@ -1,0 +1,37 @@
+---
+title: Datadog APM Azure App Service Go Implementation
+description: GoアプリケーションのDatadog APM導入 - Azure App Serviceでの複数アプローチ比較
+---
+
+# Datadog APM Azure App Service Go Implementation
+
+Azure App ServiceでGoアプリケーションにDatadog APMを導入する際の検討プロセスと実装方法について。
+
+## 検討したアプローチ
+
+### 1. Datadog Agentの構築
+従来のAgent-based approach。インフラ要件が重い。
+
+### 2. エージェントレスロギング
+軽量だが機能が限定的。
+
+### 3. Azure Sidecar
+Azure Container Apps環境での実装。
+
+### 4. Azure Sidecar with Extension
+Sidecarパターンに拡張機能を組み合わせ。
+
+### 5. Serverless init
+最も軽量で管理しやすいアプローチ。
+
+## 結論
+
+アプリケーションレベルのトレース実装はそのまま使えるが、インフラ設定部分をServerless用に調整する必要がある。
+
+## 参考リンク
+
+- [元のZennスクラップ](https://zenn.dev/nitaking/scraps/a7c3e15e81a28a)
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
