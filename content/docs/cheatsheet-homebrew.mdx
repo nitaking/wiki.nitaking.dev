@@ -1,0 +1,36 @@
+---
+title: Homebrew CheatSheet
+description: Homebrew (brew) commands and workflows reference for macOS package management
+icon: Package
+---
+
+https://brew.sh/ja/
+
+## Basic Commands
+
+```bash
+brew search <formula>         # Search for packages
+brew info <formula>           # Show package info
+brew list                     # List installed packages
+brew list --versions          # List with versions
+brew leaves                   # List packages not required by others
+# example brew leaves
+# brew leaves
+# direnv
+# fish
+# gh ...
+```
+
+### Install & Uninstall
+
+```bash
+brew install <formula>       # Install package
+brew install --cask <app>    # Install GUI application
+brew uninstall <formula>     # Uninstall package
+brew uninstall --cask <app>  # Uninstall GUI app
+brew reinstall <formula>     # Reinstall package
+```
+
+import { AIEditedFooter } from "@/components/ai-edited-footer";
+
+<AIEditedFooter />
