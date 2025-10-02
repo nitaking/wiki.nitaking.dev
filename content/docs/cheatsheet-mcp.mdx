@@ -18,3 +18,19 @@ claude mcp add azure-mcp npx @azure/mcp@latest server start
 ```zsh
 claude mcp add --transport sse figma-mcp http://127.0.0.1:3845/sse
 ```
+
+### Chrome Dev Tool MCP
+https://azukiazusa.dev/blog/chrome-devtools-mcp/
+
+```zsh
+claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
+```
+
+### Serena MCP
+https://blog.lai.so/serena/
+https://github.com/oraios/serena
+
+```zsh
+uvx --from git+https://github.com/oraios/serena serena-mcp-server --project $(pwd)
+claude mcp add serena-mcp-server "uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)"
+```
