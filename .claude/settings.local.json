@@ -25,7 +25,8 @@
       "mcp__serena__list_dir",
       "mcp__serena__get_symbols_overview",
       "mcp__serena__write_memory",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }
