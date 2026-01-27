@@ -48,7 +48,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add content/docs/journal.mdx
+          git add content/docs/journal.mdx bun.lock
           git commit -m "chore: update journal from RSS feed
           🤖 Automated journal update from しずかなインターネット RSS feed
           
