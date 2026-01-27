@@ -100,7 +100,7 @@ function getTypeEmoji(type?: string): string {
 }
 
 function formatDate(isoDate: string): string {
-  return new Date(isoDate).toLocaleDateString('ja-JP', {
+  return new Date(isoDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -120,9 +120,9 @@ export default function ChangelogPage() {
 
   return (
     <DocsPage>
-      <DocsTitle>更新履歴</DocsTitle>
+      <DocsTitle>Changelogs</DocsTitle>
       <DocsDescription>
-        このサイトの最近の変更履歴（Git履歴から自動生成）
+        Recent changes to this site (auto-generated from Git history)
       </DocsDescription>
       <DocsBody>
         <div className="space-y-8">
@@ -184,7 +184,7 @@ export default function ChangelogPage() {
 
 export function generateMetadata() {
   return {
-    title: '更新履歴',
-    description: 'このサイトの最近の変更履歴（Git履歴から自動生成）',
+    title: 'Changelogs',
+    description: 'Recent changes to this site (auto-generated from Git history)',
   };
 }
