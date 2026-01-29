@@ -32,3 +32,6 @@ next-env.d.ts
 
 # serena
 .serena
+
+# claude
+.claude/settings.local.json
