@@ -126,7 +126,9 @@ export default function ChangelogPage() {
       </DocsDescription>
       <DocsBody>
         <div className="space-y-8">
-          {Object.entries(grouped).map(([date, commits]) => (
+          {Object.entries(grouped)
+            .sort(([dateA], [dateB]) => new Date(dateB).getTime() - new Date(dateA).getTime())
+            .map(([date, commits]) => (
             <div key={date}>
               <h2 className="text-xl font-semibold mb-4 border-b pb-2">
                 {date}
