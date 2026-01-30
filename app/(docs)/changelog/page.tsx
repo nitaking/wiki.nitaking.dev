@@ -107,6 +107,29 @@ function formatDate(isoDate: string): string {
   });
 }
 
+function inferSectionFromMessage(message: string): string | null {
+  const keywords = {
+    'development--tools': ['terraform', 'markdown', 'dev', 'tool', 'npm', 'react', 'css', 'frontend', 'ui', 'javascript', 'typescript', 'node'],
+    'ai--machine-learning': ['ai', 'machine learning', 'prompt', 'llm', 'openai', 'claude', 'chatgpt'],
+    'photography': ['photo', 'camera', 'image', 'culling', 'fujifilm', 'gr', 'x-h2'],
+    'philosophy--design': ['design', 'ideology', 'ddd', 'philosophy', 'decision', 'strategy'],
+    'knowledge-management': ['note', 'knowledge', 'pkm', 'anytype', 'capacities', 'heptabase'],
+    'life--interests': ['coffee', 'life', 'water', 'loading'],
+    'creating': ['video', 'voicevox', 'aquastalk', 'davinci', 'fcp'],
+    'workflow--productivity': ['workflow', 'productivity', 'tool', 'tournament', 'podcast']
+  };
+
+  const lowerMessage = message.toLowerCase();
+
+  for (const [section, words] of Object.entries(keywords)) {
+    if (words.some(word => lowerMessage.includes(word))) {
+      return section;
+    }
+  }
+
+  return null; // マッチしない場合はリンク非表示
+}
+
 export default function ChangelogPage() {
   const commits = getGitCommits();
 
@@ -154,9 +177,46 @@ export default function ChangelogPage() {
                             {commit.pages.map((page) => {
                               // index.mdxの場合、scopeがあればそのセクションへアンカーリンク
                               const isTop = page === 'top';
-                              const anchor = isTop && commit.scope ? `#-${commit.scope}` : '';
+
+                              let anchor = '';
+                              let label = page;
+
+                              if (isTop && commit.scope) {
+                                // セクション名からラベルを生成するマッピング
+                                const sectionLabels: Record<string, string> = {
+                                  'development--tools': 'Development & Tools',
+                                  'ai--machine-learning': 'AI & Machine Learning',
+                                  'photography': 'Photography',
+                                  'philosophy--design': 'Philosophy & Design',
+                                  'knowledge-management': 'Knowledge Management',
+                                  'life--interests': 'Life & Interests',
+                                  'creating': 'Creating',
+                                  'workflow--productivity': 'Workflow & Productivity',
+                                  'documentation--diagrams': 'Documentation & Diagrams'
+                                };
+
+                                let inferredSection: string | null = null;
+
+                                // contentスコープの場合はメッセージから推測
+                                if (commit.scope === 'content') {
+                                  inferredSection = inferSectionFromMessage(commit.message);
+                                } else {
+                                  // それ以外のスコープの場合、sectionLabelsに存在するか確認
+                                  if (commit.scope in sectionLabels) {
+                                    inferredSection = commit.scope;
+                                  }
+                                }
+
+                                if (inferredSection) {
+                                  anchor = `#${inferredSection}`;
+                                  label = sectionLabels[inferredSection] || 'Content';
+                                } else {
+                                  // ヒットしない場合はリンクを表示しない
+                                  return null;
+                                }
+                              }
+
                               const href = isTop ? `/${anchor}` : `/${page}`;
-                              const label = isTop && commit.scope ? commit.scope : page;
 
                               return (
                                 <a
