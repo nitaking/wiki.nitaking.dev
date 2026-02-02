@@ -13,13 +13,14 @@ interface Commit {
   type?: string;
   scope?: string;
   subject?: string;
+  body?: string;
   pages?: string[];
 }
 
 function getGitCommits(): Commit[] {
   try {
     const log = execSync(
-      'git log --pretty=format:"%H|%aI|%s" --name-only -n 50',
+      'git log --pretty=format:"%H|%aI|%s|%b" --name-only -n 50',
       { encoding: 'utf-8' }
     );
 
@@ -34,7 +35,16 @@ function getGitCommits(): Commit[] {
         continue;
       }
 
-      const [hash, date, message] = line.split('|');
+      const parts = line.split('|');
+      if (parts.length < 3) {
+        i++;
+        continue;
+      }
+
+      const hash = parts[0];
+      const date = parts[1];
+      const message = parts[2];
+      const body = parts.slice(3).join('|').trim(); // 本文に | が含まれる可能性を考慮
 
       // Collect file paths until next commit or end
       const files: string[] = [];
@@ -64,6 +74,7 @@ function getGitCommits(): Commit[] {
           type: match[1],
           scope: match[2],
           subject: match[3],
+          body: body || undefined,
           pages: pages.length > 0 ? pages : undefined,
         });
       } else {
@@ -72,6 +83,7 @@ function getGitCommits(): Commit[] {
           date,
           message,
           subject: message,
+          body: body || undefined,
           pages: pages.length > 0 ? pages : undefined,
         });
       }
@@ -130,16 +142,50 @@ function inferSectionFromMessage(message: string): string | null {
   return null; // マッチしない場合はリンク非表示
 }
 
+function parseLinksInText(text: string): React.ReactNode[] {
+  const urlRegex = /(https?:\/\/[^\s)]+)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = urlRegex.exec(text)) !== null) {
+    // テキスト部分を追加
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    // リンク部分を追加
+    parts.push(
+      <a
+        key={match.index}
+        href={match[0]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 dark:text-blue-400 hover:underline"
+      >
+        {match[0]}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  // 残りのテキストを追加
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : [text];
+}
+
 export default function ChangelogPage() {
   const commits = getGitCommits();
 
   // Group by date
   const grouped = commits.reduce((acc, commit) => {
     const date = formatDate(commit.date);
-    if (!acc[date]) acc[date] = [];
-    acc[date].push(commit);
+    if (!acc[date]) acc[date] = { commits: [], isoDate: commit.date };
+    acc[date].commits.push(commit);
     return acc;
-  }, {} as Record<string, Commit[]>);
+  }, {} as Record<string, { commits: Commit[], isoDate: string }>);
 
   return (
     <DocsPage>
@@ -150,8 +196,8 @@ export default function ChangelogPage() {
       <DocsBody>
         <div className="space-y-8">
           {Object.entries(grouped)
-            .sort(([dateA], [dateB]) => new Date(dateB).getTime() - new Date(dateA).getTime())
-            .map(([date, commits]) => (
+            .sort(([, a], [, b]) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime())
+            .map(([date, { commits }]) => (
             <div key={date}>
               <h2 className="text-xl font-semibold mb-4 border-b pb-2">
                 {date}
@@ -173,8 +219,8 @@ export default function ChangelogPage() {
                           {commit.hash}
                         </span>
                         {commit.pages && commit.pages.length > 0 && (
-                          <span className="flex gap-1">
-                            {commit.pages.map((page) => {
+                          <span className="flex gap-1 flex-wrap">
+                            {commit.pages.slice(0, 3).map((page) => {
                               // index.mdxの場合、scopeがあればそのセクションへアンカーリンク
                               const isTop = page === 'top';
 
@@ -228,10 +274,26 @@ export default function ChangelogPage() {
                                 </a>
                               );
                             })}
+                            {commit.pages.length > 3 && (
+                              <span className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground">
+                                +{commit.pages.length - 3} more
+                              </span>
+                            )}
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 mb-0">{commit.subject}</p>
+                      <p className="mt-1 mb-0">{parseLinksInText(commit.subject || '')}</p>
+                      {commit.body && (
+                        <p className="mt-2 mb-0 text-sm text-muted-foreground whitespace-pre-line">
+                          {parseLinksInText(
+                            commit.body
+                              .split('\n')
+                              .filter(line => !line.startsWith('Co-Authored-By:'))
+                              .join('\n')
+                              .trim()
+                          )}
+                        </p>
+                      )}
                     </div>
                   </li>
                 ))}
