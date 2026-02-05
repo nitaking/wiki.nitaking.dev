@@ -10,26 +10,16 @@ icon: GitBranch
 ```bash
 git config rebase.autosquash true
 ```
-Auto-squash設定により、`git commit --fixup` や `git commit --squash` でコミットした際に、`git rebase -i` で自動的に適切な位置に配置される。
+Auto-squash設定により、`git commit --fixup` や `git commit --squash` でコミットした際に、`git rebase -i` で自動的に配置。
 
-### Essential Global Config
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-git config --global init.defaultBranch main
-git config --global pull.rebase false
+## Slack
+
+```
+/github subscribe owner/repo reviews,comments,branches,commits:*
 ```
 
-## Daily Commands
+refs: https://qiita.com/unsoluble_sugar/items/e42ac352400598a24915
 
-### Status & Information
-```bash
-git status                    # Working directory status
-git log --oneline            # Compact commit history
-git log --graph --oneline    # Visual commit graph
-git diff                     # Working directory changes
-git diff --staged           # Staged changes
-```
 
 ### Adding & Committing
 ```bash
