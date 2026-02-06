@@ -134,6 +134,20 @@ content/docs/
 - `bun run start` - プロダクションサーバー起動
 - `bun run postinstall` - fumadocsでMDXファイルを処理・ナビゲーション更新
 
+### コミットメッセージ
+Conventional Commits形式を使用（changelogページが自動生成されるため必須）：
+```
+type(scope): subject
+```
+- **type**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`
+- **scope**: 変更対象（`content`, `changelog`, `cheatsheet` 等）
+- **subject**: 変更内容の簡潔な説明
+
+例：
+- `feat(content): add OpenCode link to Development Environment`
+- `docs(cheatsheet): update Git cheatsheet with Slack integration`
+- `fix(changelog): sort dates chronologically in changelog page`
+
 ### コンテンツガイドライン
 - **ファイル配置**: 全て`/content/docs/`直下にフラット配置
 - **命名規則**: カテゴリプレフィックス使用（tech-, thoughts-, gaming-等）
