@@ -263,17 +263,13 @@ Micro.blogの投稿リンクもReflectリンクと同様にindex.mdxで管理す
 短い投稿やメモ的なコンテンツの公開先として活用。
 
 ### リンクの配置ルール
-- 関連するReflectリンクがある場合：そのリンクの子要素（インデント）として配置
-  ```markdown
-  - [OpenCode](https://reflect.site/g/nitaking/opencode/...)
-    - [OpenCode](https://nitaking.micro.blog/2026/02/07/opencode.html) - micro.blog
-  ```
-- 独立したトピックの場合：適切なカテゴリにアルファベット順で配置し、`- micro.blog` サフィックスを付与
-- カテゴリ分類はReflectリンクと同じ基準で判断
+- index.mdxの「📝 Microblog」セクションに集約
+- アルファベット順で配置
+- Reflectリンクとは独立して管理（トピック別ではなくソース別）
 
 ### フォーマット
 ```markdown
-- [タイトル](https://nitaking.micro.blog/...) - micro.blog
+- [記事タイトル](https://nitaking.micro.blog/...)
 ```
 
 ## デジタルガーデンの原則
