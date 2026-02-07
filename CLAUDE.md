@@ -256,6 +256,26 @@ type(scope): subject
 3. **リンク管理**: Reflectノートへの参照の更新維持
 4. **コンテンツ同期**: Reflectリンク参照を更新するワークフローの確立
 
+## Micro.blog連携
+
+### 概要
+Micro.blogの投稿リンクもReflectリンクと同様にindex.mdxで管理する。
+短い投稿やメモ的なコンテンツの公開先として活用。
+
+### リンクの配置ルール
+- 関連するReflectリンクがある場合：そのリンクの子要素（インデント）として配置
+  ```markdown
+  - [OpenCode](https://reflect.site/g/nitaking/opencode/...)
+    - [OpenCode](https://nitaking.micro.blog/2026/02/07/opencode.html) - micro.blog
+  ```
+- 独立したトピックの場合：適切なカテゴリにアルファベット順で配置し、`- micro.blog` サフィックスを付与
+- カテゴリ分類はReflectリンクと同じ基準で判断
+
+### フォーマット
+```markdown
+- [タイトル](https://nitaking.micro.blog/...) - micro.blog
+```
+
 ## デジタルガーデンの原則
 nikiv.devモデルに従って：
 - **Learning in Public**: 知識と学習プロセスの共有
