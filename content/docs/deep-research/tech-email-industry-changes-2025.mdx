@@ -3,116 +3,65 @@ title: メールの今：2025年後半の動向
 description: AIネイティブクライアント、Rustメールサーバー、セルフホスティング復権 — 2025年8月〜2026年2月のメールイノベーション総括
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 # メールの今：2025年後半の動向
 
-**AIネイティブクライアント、Rustメールサーバー、セルフホスティング復権 — 2025年8月〜2026年2月は、この10年で最も活発なメールイノベーション期間となった。**
+<Callout type="info">
+Claude Deep Research によるアウトプット（2026/02）
+</Callout>
 
-BillionMail、Mail0（Zero）、Stalwartの3つのOSSプロジェクトがそれぞれGitHub 10,000スター超えを達成。Product HuntではAIメールツールが連日トップを獲得。Redditのプライバシー・セルフホスティング系コミュニティでは脱Google運動がさらに加速した。手軽なAI、成熟したRustインフラ、プライバシー意識の高まりが重なり、メールスタックの全レイヤーで革新が起きている。
+2025年8月〜2026年2月は、この10年で最も活発なメールイノベーション期間となった。BillionMail、Mail0（Zero）、Stalwartの3つのOSSプロジェクトがそれぞれGitHub 10,000スター超えを達成。手軽なAI、成熟したRustインフラ、プライバシー意識の高まりが重なり、メールスタックの全レイヤーで革新が起きている。
 
----
+## AIネイティブなメールクライアント
 
-## 1. AIネイティブなメールクライアントがProduct HuntとRedditを席巻
+AIが「機能」ではなく「アーキテクチャ」であるメールクライアントが台頭してきた期間だった。
 
-この期間で最大のカテゴリシフトは、AIが「機能」ではなく「アーキテクチャ」であるメールクライアントの台頭だ。
+### Mail0（Zero）
+YC支援のOSSクライアント。Next.js + React製で、スレッド要約・返信生成・メールとの自然言語チャット機能を搭載。GitHub 10,400スター、MITライセンス、セルフホスト対応。サイト：0.email
 
-### Mail0（Zero） — OSSのAIネイティブメールクライアント
-- **GitHub:** 10,400スター（急速に成長）
-- **YC支援**、MITライセンス、セルフホスト対応
-- Next.js + React製。スマートカテゴリ分類、スレッド要約、文脈に応じた返信生成、メールとの自然言語チャット機能
-- Redditのr/privacyコミュニティでも高評価
-- **サイト:** 0.email
+### Filo Mail
+メールスレッドからTo-Doを自動抽出しカレンダーと同期。iOS / macOS / Android / Windows対応。Product Huntで約145アップボート。
 
-### Filo Mail — メールからタスクを自動抽出
-- メールスレッドからTo-Doを自動抽出し、カレンダーと同期
-- iOS / macOS / Android / Windows対応
-- Product Huntで約145アップボート
-- 1日10〜40分の時短を謳う
+### April
+YC S25。音声だけで通勤中に100通以上のメールを処理できる音声ファーストなメール管理ツール。
 
-### April — 音声ファーストのメール管理
-- YC S25。通勤中に音声だけで100通以上のメールを処理可能
-- 2025年8月にProduct Huntでローンチ、好評
+### Shortwave
+元Google Inboxチームが構築。AIアシスタント「Ghostwriter」がユーザーの文体を学習して返信を下書き。月額$7〜14でSuperhumanの代替として人気。r/productivityでの**Superhuman vs Shortwave論争**は最も活発なスレッドの一つに。
 
-### Shortwave — 元Google Inboxチームが構築
-- **月額$7〜14**（Superhumanの$30に対する価値志向の選択肢）
-- AIアシスタント「Ghostwriter」がユーザーの文体を学習して返信を下書き
-- 自然言語でのメールフィルター設定が好評
-- **Superhuman vs Shortwave論争**がr/productivityで最も活発なスレッドの一つに
+### Superhuman
+2025年半ばにGrammarlyが買収。AIメール市場がニッチから主流へ移行したシグナル。
 
-### Superhuman — Grammarlyが買収
-- 2025年半ばにGrammarlyが買収。AIメール市場がニッチから主流へ移行したシグナル
+### Inbox Zero
+OSSのAIメール管理ツール。ラベリング・アーカイブ・一括購読解除を自動化。Product Hunt #1、GitHub 7,000スター超。OpenAI / Anthropic / Ollamaに対応、Dockerでセルフホスト可能。
 
-### Inbox Zero — OSSのAIメール管理ツール
-- **Product Hunt #1**を獲得、GitHub 7,000スター超
-- AIによるラベリング、アーカイブ、返信ドラフト、一括購読解除を自動化
-- Gmail / Outlook対応。OpenAI、Anthropic、ローカルOllamaに対応
-- Dockerでセルフホスト可能
+## OSSメールインフラの転換点
 
----
+複数の本格的なOSSメールインフラプロジェクトが同時に、商用ソフト並みの完成度に達した。
 
-## 2. OSSメールインフラが転換点に到達
+### BillionMail
+フルメールサーバー（Postfix + Dovecot + Rspamd）＋ニュースレター管理＋メールマーケティングを1つのDockerデプロイで。**8分で設置完了**。GitHub 12,000〜13,400スター、AGPL-3.0ライセンス、Go製。
 
-GitHubで最も目立つトレンドは、複数の本格的なOSSメールインフラプロジェクトが同時に、これまで商用ソフトでしか得られなかったレベルの完成度に達していること。
+### Stalwart Mail Server
+全てRust製。JMAP / IMAP4 / POP3 / SMTP / CalDAV / CardDAV / WebDAVをシングルバイナリで提供。**LLMによるスパムフィルタリング**も実装。EUのNLnetから資金提供。GitHub 10,600スター。
 
-### BillionMail — 爆発的成長のオールインワンメールサーバー
-- **GitHub:** ~12,100〜13,400スター（数ヶ月で到達）
-- AGPL-3.0ライセンス
-- フルメールサーバー（Postfix + Dovecot + Rspamd）＋ニュースレター管理＋メールマーケティングを1つのDockerデプロイで
-- **8分でDocker設置完了**。Mailchimp / Sendy / Campaign Monitorの無料セルフホスト代替
-- Go製バックエンド、活発なDiscordコミュニティ
+### Listmonk
+v5.0でビジュアルドラッグ&ドロップのメールビルダー追加。控えめなハードウェアで数百万購読者を処理できる定番ツール。Go + Vue.js製、GitHub 18,400スター。
 
-### Stalwart Mail Server — Rust製の次世代メールサーバー
-- **GitHub:** ~10,600スター（2025年初頭の6,500から63%成長）
-- **全てRustで記述**。JMAP、IMAP4、POP3、SMTP、CalDAV、CardDAV、WebDAVをシングルバイナリで
-- **LLMによるスパムフィルタリング**：言語モデルでフィッシングとスパムを分析
-- EUのNGI/NLnetプログラムから資金提供
-- Privacy Guidesが内部で採用。r/selfhostedで「Mailcowを置き換えられるか」の議論が活発
+### Mox
+シングルバイナリのGo製メールサーバー。DMARC / DKIM / SPF / DANEを自動設定。MITライセンス、NLnet（EU）から資金提供。GitHub 5,200スター。
 
-### Listmonk — 定番OSSメールマーケティング
-- **GitHub:** 18,400スター超
-- v5.0でビジュアルドラッグ＆ドロップメールビルダーを追加
-- Go + Vue.js製。控えめなハードウェアで数百万の購読者を処理
-- セルフホスティングコミュニティでのニュースレターツールとして定番の推薦
+### KumoMTA
+PowerMTAのベテランが構築した大規模送信向けRust製MTA。Luaベースのポリシースクリプティング。数十億通規模のESP向け。
 
-### Mox — シングルバイナリのGo製メールサーバー
-- **GitHub:** 5,200スター
-- MITライセンス。NLnet（EU）から資金提供
-- DMARC/DKIM/SPF/DANE/MTA-STSの自動設定で配信性問題に対処
+## セルフホスティング＆プライバシー
 
-### KumoMTA — 大規模送信向けRust製MTA
-- PowerMTAのベテランが構築。Apache 2.0ライセンス
-- Luaベースのポリシースクリプティング
-- 数十億通規模の送信が必要なESP向け
+r/degoogleが約**30万人**に成長。GoogleのGmailデータをGemini AI学習に使用、Microsoftの強制的な新Outlook移行、ポスト量子暗号への意識の高まりが脱出を加速させた。
 
----
+**Proton Mail**（1億人超）が筆頭だが、**Tuta**（旧Tutanota）はポスト量子暗号を先行実装済み、件名も暗号化、月額€3と優位点がある。新興の**Atomic Mail**は1年未満で100万ユーザー突破。**PurelyMail**は年間$10の格安で熱狂的支持を獲得。
 
-## 3. セルフホスティング＆プライバシー運動がさらに加速
-
-Redditのr/degoogleは約**30万人**のメンバーに成長。Gmail→プライバシー重視プロバイダへの移行は最も議論されるトピックの一つ。
-
-### 背景となる出来事
-- GoogleがGmailデータをGemini AIの学習に使用していたことがRedditユーザーに発見される
-- Microsoftが機能を削った新Outlookへの強制移行を進める
-- ポスト量子暗号への意識が高まる
-
-### Proton Mail — 依然として最有力推薦
-- **1億人超のユーザー**
-- Easy Switch移行ツールが高評価
-- ブロックチェーンベースのキー透明性と量子安全暗号を展開中
-- 不満点：有料プラン＋Bridgeが標準IMAP/SMTPアクセスに必要、暗号化のため検索が制限的
-
-### Tuta（旧Tutanota） — Protonの最大のライバル
-- **ポスト量子暗号をすでに実装済み**（Protonはまだ展開中）
-- **月額€3**でProtonより安い
-- **件名も暗号化**（Protonはしない）
-- F-Droidで入手可能（Google Play Services不要）
-- 欠点：IMAP/SMTPサポートなし、Tuta独自クライアント必須
-
-### 注目の新興勢力
-- **Atomic Mail**（EU拠点、2024年設立）：1年未満で**100万ユーザー突破**。ゼロアクセスアーキテクチャ、寛大な無料プラン
-- **PurelyMail**：年間$10の格安。Redditで熱狂的支持
-- **Mango Mail**：月$1.50で無制限ドメイン・アドレス
-
-### セルフホストメールサーバーの現状
+### セルフホストメールサーバー比較
 
 | プロジェクト | GitHub Stars | 特徴 |
 |---|---|---|
@@ -123,55 +72,42 @@ Redditのr/degoogleは約**30万人**のメンバーに成長。Gmail→プラ�
 | **BillionMail** | 12,100+ | メールサーバー＋マーケティング一体型 |
 | **Mox** | 5,200+ | Go製シングルバイナリ、配信性重視 |
 
-### メールエイリアシング — 独立したプライバシー手法に
-- **SimpleLogin**（Proton傘下）、**addy.io**、Firefox Relay、**Cloudflare Email Routing**
-- 本来のアドレスとサービス登録の間のレイヤーとして頻繁に議論
+メールエイリアシング（SimpleLogin、addy.io、Firefox Relay、Cloudflare Email Routing）も独立したプライバシー手法として定着しつつある。
 
----
+## 開発者ツール＆メールマーケティング
 
-## 4. 開発者ツール＆メールマーケティングの激しい競争
+**Resend**がJSエコシステムのデファクトスタンダードとして定着。React Email 4.0（リンター・スパムスコア・レスポンシブプレビュー内蔵）をリリース。**Unosend**（廉価代替）、**Loops**（SaaS向け統合マーケティング）、OSS代替の**Postal**など競合が急増。
 
-### Resend — 開発者向けメールの中心的存在
-- 2023年Product Hunt開発者ツール年間大賞（Golden Kitty）受賞
-- **React Email 4.0**（431アップボート）：内蔵リンター、スパムスコアチェッカー、レスポンシブプレビュー
-- **new.email**（270アップボート）：自然言語でクロスプラットフォームメールを構築
-- React Emailは**GitHub 15,000スター超**、週間npm DL 27万件超
-- JSエコシステムでのメールテンプレート構築のデファクトスタンダードに
+**Maillayer v2.0**は買い切りモデルのセルフホスト型Mailchimp代替としてProduct Hunt #1（379アップボート）を獲得。Amazon SES使用で1,000通あたり$0.10、月額料金なし。
 
-### 競合が急増
-- **Unosend**：2025年12月Product Hunt 172アップボート。Resend/SendGridの廉価代替。月5,000通無料
-- **Loops**：SaaS企業向けの統合マーケティング＋トランザクションメール。1,000コンタクト無料
-- **Postal**（GitHub 15,000+スター、MIT）、**Plunk**：SendGrid/PostmarkのOSS代替
+**beehiiv**は月間30億通処理、55,000+クリエイター。AIウェブサイトビルダーとゼロコミッションのデジタルプロダクト販売を追加し、Substackに直接的な脅威を与えている。
 
-### 「買い切りモデル」の爆発
-- **Maillayer v2.0**：セルフホスト型Mailchimp代替。Amazon SES使用で1,000通あたり$0.10
-- **Product Hunt #1（379アップボート、47コメント）**
-- 一度の支払い、月額料金なし。200チーム以上が利用
+## この半年が示す5つの構造変化
 
-### AIによるメールマーケティングの変革
-- **Mailmodo AI**（496アップボート — 今回最高スコア）：自然言語で指示→AIがコピー・デザイン・セグメント・自動化を全生成
-- **ELMA**：WebサイトURLをスキャンしてブランドのトーンに合わせたフルファネルメールキャンペーンを生成
+<Steps>
+<Step>
+**Rustがメールインフラの言語になりつつある**
 
-### beehiiv — ニュースレターから「コンテンツ経済OS」へ
-- 2025年11月に大規模拡張：AIウェブサイトビルダー、**手数料ゼロのデジタルプロダクト販売**、ネイティブポッドキャスティング
-- **月間30億通処理**、55,000+クリエイター、Series B $33M調達
-- ゼロコミッションモデルでSubstackに直接的脅威
-
----
-
-## 5. この半年が示すメールの未来 — 5つの構造変化
-
-### ① Rustがメールインフラの言語になりつつある
 StalwartとKumoMTAはC言語時代のメールサーバーの世代交代を象徴。メモリ安全性、高パフォーマンス、モダンなアーキテクチャ。両プロジェクトともEU資金を受けており制度的支援もある。
+</Step>
+<Step>
+**「AI搭載」から「AIネイティブ」が標準に**
 
-### ② 「AI搭載」から「AIネイティブ」が標準に
-Mail0やShortwaveは従来のメールクライアントにAIを追加するのではなく、**体験全体を言語モデルの上に再構築**。米国労働者の**45%がAIを業務利用**（Gallup 2025 Q3）しており、このアプローチは主流への期待に移行中。
+Mail0やShortwaveは従来のメールクライアントにAIを追加するのではなく、体験全体を言語モデルの上に再構築。米国労働者の**45%がAIを業務利用**（Gallup 2025 Q3）しており、このアプローチは主流への期待に移行中。
+</Step>
+<Step>
+**セルフホストメールが本当にアクセシブルに**
 
-### ③ セルフホストメールが本当にアクセシブルに
 BillionMailの8分Docker設置、Moxのシングルバイナリ、Stalwartのオールインワン。参入障壁は劇的に低下。残る課題はGmail/Microsoftの厳格なフィルタリングに対する配信性だが、デフォルト設定の改善で対処が進む。
+</Step>
+<Step>
+**「買い切りモデル」がメールSaaSを侵食**
 
-### ④ 「買い切りモデル」がメールSaaSを破壊中
 MaillayerのProduct Hunt #1とBillionMailの爆発的成長は、サブスク料金を拒否する市場セグメントの存在を示す。AWS SESがメール単価を無視できるレベルにした今、月額課金の正当性が問われている。
+</Step>
+<Step>
+**ポスト量子暗号がもはや理論ではない**
 
-### ⑤ ポスト量子暗号がもはや理論ではない
 Tutaはすでに実装済み、Protonは展開中。ポスト量子ロードマップを発表していないメールプロバイダは遅れていると見なされるリスクがある。
+</Step>
+</Steps>
