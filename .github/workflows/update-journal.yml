@@ -50,9 +50,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add content/docs/journal.mdx bun.lock
           git commit -m "chore: update journal from RSS feed
-          🤖 Automated journal update from しずかなインターネット RSS feed
-          
-          Generated with [Claude Code](https://claude.ai/code)"
+          🤖 Automated journal update from しずかなインターネット RSS feed"
       - name: Push changes
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: git push
