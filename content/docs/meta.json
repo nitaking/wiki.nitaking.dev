@@ -23,8 +23,7 @@
     "workflow-wrap-model-method",
     "---References---",
     "cheatsheets",
-    "adr-architecture-decision-records",
-    "postmortem",
+    "templates",
     "meta"
   ],
   "root": true,
