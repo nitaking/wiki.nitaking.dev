@@ -108,19 +108,6 @@ type(scope): subject
 - サイドバーのラベルはfrontmatterの `title` から直接取得される
 - タイトルを短縮するとページのh1も変わる（許容範囲）
 
-### サイドバーItemのtruncate実装
-長いタイトルが折り返されないよう `components/sidebar-item.tsx` でカスタムItemを実装済み：
-```tsx
-export function SidebarPageItem({ item }: { item: PageTree.Item }) {
-  return (
-    <SidebarItem href={item.url} external={item.external} icon={item.icon}>
-      <span className="truncate">{item.name}</span>
-    </SidebarItem>
-  );
-}
-```
-`app/(docs)/layout.tsx` の `sidebar.components.Item` に登録済み。
-
 ### Metaフォルダ（collapsible）
 `content/docs/meta/` ディレクトリに `changelog.mdx` と `site-history.mdx` を配置し、`meta/meta.json` で `collapsible: true` を設定。サイドバーでデフォルト折りたたみ表示。
 
