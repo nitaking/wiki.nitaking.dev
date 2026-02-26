@@ -22,10 +22,7 @@
     "workflow-book-workflow",
     "workflow-wrap-model-method",
     "---References---",
-    "cheatsheet-git",
-    "cheatsheet-homebrew",
-    "cheatsheet-html",
-    "cheatsheet-mcp",
+    "cheatsheets",
     "adr-architecture-decision-records",
     "postmortem",
     "meta"
