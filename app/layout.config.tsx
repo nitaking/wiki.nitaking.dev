@@ -1,12 +1,6 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { Globe, MessageCircle, AtSign } from 'lucide-react';
 
-/**
- * Shared layout configurations
- *
- * you can customise layouts individually from:
- * Home Layout: app/(home)/layout.tsx
- * Docs Layout: app/docs/layout.tsx
- */
 export const baseOptions: BaseLayoutProps = {
   githubUrl: 'https://github.com/nitaking/wiki.nitaking.dev',
   nav: {
@@ -14,9 +8,25 @@ export const baseOptions: BaseLayoutProps = {
   },
   links: [
     {
-      text: 'Github',
-      url: 'https://github.com/nitaking',
-      active: 'url',
+      type: 'icon',
+      text: 'nitaking.dev',
+      url: 'https://www.nitaking.dev',
+      icon: <Globe />,
+      external: true,
+    },
+    {
+      type: 'icon',
+      text: 'micro.blog',
+      url: 'https://nitaking.micro.blog',
+      icon: <MessageCircle />,
+      external: true,
+    },
+    {
+      type: 'icon',
+      text: 'omg.lol',
+      url: 'https://nitaking.omg.lol',
+      icon: <AtSign />,
+      external: true,
     },
   ],
 };

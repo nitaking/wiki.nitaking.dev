@@ -1,7 +1,6 @@
 {
   "pages": [
     "index",
-    "changelog",
     "uses",
     "---🌱 Knowledge Garden---",
     "mental-models-life",
@@ -16,6 +15,7 @@
     "philosophy-barrel-files",
     "---🛠️ Tech---",
     "tech-datadog-apm-azure",
+    "tech-go-goroutine-patterns",
     "tech-online-ddl-mysql",
     "tech-swr",
     "---⚙️ Workflow---",
@@ -37,6 +37,8 @@
     "postmortem",
     "---🤖 Claude---",
     "claude/claude-config-list",
+    "---Meta---",
+    "changelog",
     "site-history"
   ],
   "root": true,
