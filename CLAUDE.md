@@ -359,5 +359,50 @@ ChatGPTやClaude Researchで深掘りしたトピックは、`deep-research-coll
 - **個人的な声**: 「〜してみたい」「〜をやめました」など、執筆者の視点を入れる
 - **箇条書きの活用**: 情報を整理しやすい形式で提示
 
+## サイドバーカスタマイズのノウハウ
+
+### 現在のサイドバー構成（2026年2月時点）
+```
+index / uses → Personal → Tech → Workflow → References → Meta(collapsible)
+```
+
+### 設計方針
+- **セクション順序**: 個人サイトなのでPersonalを最上位に。Tech/Workflowは後ろ
+- **セクション名**: 絵文字なし、シンプルなテキストのみ（`---Tech---` 形式）
+- **ページアイコン**: frontmatterの`icon:`は使わない（重複が多くサイドバーがうるさくなるため）
+- **タイトル**: サイドバーで1行に収まる長さに短縮する
+
+### fumadocsのサイドバーカスタマイズ制約
+- `meta.json`の`pages`配列はページごとのカスタムラベル設定不可（文字列パスのみ）
+- サイドバーのラベルはfrontmatterの`title`から直接取得される
+- タイトルを短縮するとページのh1も変わる（許容範囲）
+
+### サイドバーItemのtruncate実装
+長いタイトルが折り返されないよう `components/sidebar-item.tsx` でカスタムItemを実装済み：
+```tsx
+// components/sidebar-item.tsx
+export function SidebarPageItem({ item }: { item: PageTree.Item }) {
+  return (
+    <SidebarItem href={item.url} external={item.external} icon={item.icon}>
+      <span className="truncate">{item.name}</span>
+    </SidebarItem>
+  );
+}
+```
+`app/(docs)/layout.tsx` の `sidebar.components.Item` に登録済み。
+
+### Metaフォルダ（collapsible）
+`content/docs/meta/` ディレクトリに `changelog.mdx` と `site-history.mdx` を配置し、`meta/meta.json` で `collapsible: true` を設定。サイドバーでデフォルト折りたたみ表示。
+
+### タイトル短縮の実績
+| 変更前 | 変更後 |
+|---|---|
+| 技術選定の意思決定フレームワーク | 技術選定フレームワーク |
+| APIファースト戦略の採用 | API First |
+| フロントエンドでのOOP的DDDを避ける理由 | No OOP/DDD in Frontend |
+| Go Goroutine Best Practices | Go Goroutines |
+| ADR - Architecture Decision Records | ADR |
+| Philosophy of Digital Gardens | Digital Garden |
+
 ## Meta
 - 日本語で会話する
