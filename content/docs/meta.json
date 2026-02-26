@@ -1,7 +1,6 @@
 {
   "pages": [
     "index",
-    "site-history",
     "changelog",
     "uses",
     "---🌱 Knowledge Garden---",
@@ -37,7 +36,8 @@
     "adr-architecture-decision-records",
     "postmortem",
     "---🤖 Claude---",
-    "claude/claude-config-list"
+    "claude/claude-config-list",
+    "site-history"
   ],
   "root": true,
   "defaultOpen": false
