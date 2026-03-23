@@ -33,3 +33,10 @@ https://github.com/oraios/serena
 uvx --from git+https://github.com/oraios/serena serena-mcp-server --project $(pwd)
 claude mcp add serena-mcp-server "uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)"
 ```
+
+### Datadog MCP
+https://docs.datadoghq.com/ja/bits_ai/mcp_server/
+
+```zsh
+claude mcp add --transport http datadog-mcp https://mcp.datadoghq.com/api/unstable/mcp-server/mcp
+```
