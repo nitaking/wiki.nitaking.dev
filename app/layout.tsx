@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Metadata } from 'next';
 import Script from 'next/script';
+import { Agentation } from 'agentation';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           strategy="afterInteractive"
         />
         <RootProvider>{children}</RootProvider>
+        {process.env.NODE_ENV === 'development' && <Agentation />}
       </body>
     </html>
   );
