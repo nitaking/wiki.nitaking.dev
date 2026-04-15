@@ -1,9 +1,9 @@
 'use client';
 
-import type { PageTree } from 'fumadocs-core/source';
+import type { Separator } from 'fumadocs-core/page-tree';
 import { cn } from '@/lib/utils';
 
-export function SidebarSeparator({ item }: { item: PageTree.Separator }) {
+export function SidebarSeparator({ item }: { item: Separator }) {
   return (
     <p
       className={cn(
