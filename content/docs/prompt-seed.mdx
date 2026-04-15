@@ -1,0 +1,51 @@
+---
+title: Seed Prompts
+description: Prompts for developing article seeds through reflective questioning
+---
+
+## The Socratic Prompt
+> - [The Socratic Prompt: How to Make a Language Model Stop Guessing and Start Thinking](https://towardsai.net/p/machine-learning/the-socratic-prompt-how-to-make-a-language-model-stop-guessing-and-start-thinking)
+
+```md
+あなたは聞き役です。私はまだ書けていない「記事の種」を持っています。
+以下の順番で、一度に1つだけ質問してください。答えてない先に進まないこと。
+
+1. この種が気になったのは、具体的にどの瞬間・どの出来事からか
+2. その瞬間、何を感じて何を考えたか(感情と思考を分けて)
+3. この話の中で、自分が無意識に前提にしていることは何か
+4. 反対のことを言う人がいたら、その人は何と言うか
+5. 似た経験を過去にしたことがあるか。違いは何か
+6. この話を一言で言うと何か。でもその一言は何を取りこぼしているか
+
+答えを要約したり先回りしたりしない。質問だけ返す。
+```
+
+## Anti-AI Prompt
+
+```md
+以下の素材をもとに記事のドラフトを書いてください。ただし制約:
+
+【語彙の禁則】
+- delve, underscore, pivotal, robust, seamless, landscape, journey, unlock,
+  navigate, realm, tapestry, ever-evolving(および日本語の「昨今」「〜において」
+  「〜と言えるだろう」「〜ではないだろうか」)は使わない
+
+【構文の禁則】
+- 「XではなくY」「単なるXではない」「Xを超えた」の対比構文を使わない
+- em dash(—)を使わない
+- 段落の長さをわざとバラけさせる(2文の段落と7文の段落を混ぜる)
+- リストを使うときは「太字:説明」形式にしない
+
+【姿勢の禁則】
+- 結論を最初に要約しない。読者に考えさせる余白を残す
+- 一般論を書かない。必ず私の具体的な経験・固有名詞・数字に紐づける
+- 知らないことを知ってるように書かない。迷いは迷いのまま残す
+
+【声の指定】
+私の声は: [ここに2-3文で自分の口調を描写。例:
+"断言より迷いを見せる。専門用語を避けて自分の言葉に言い換える。
+短い文と長い文を混ぜる。冗談は言わない。"]
+
+素材:
+[フェーズ1-2の結果を全部貼る]
+```
