@@ -25,7 +25,6 @@ export default async function Page(props: {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <ViewOptionsPopover githubUrl={`https://github.com/nitaking/wiki.nitaking.dev/blob/main/content/docs/${page.url === '/' ? 'index' : page.url}.mdx`} className="self-start" />
-      {page.data.lastModified && <PageLastUpdate date={page.data.lastModified} />}
       <DocsBody>
         <MDXContent
           components={getMDXComponents({
@@ -33,6 +32,7 @@ export default async function Page(props: {
             a: createRelativeLink(source, page),
           })}
         />
+        {page.data.lastModified && <PageLastUpdate date={page.data.lastModified} />}
       </DocsBody>
     </DocsPage>
   );
