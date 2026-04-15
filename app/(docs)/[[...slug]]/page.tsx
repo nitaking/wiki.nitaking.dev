@@ -5,6 +5,7 @@ import {
   DocsDescription,
   DocsTitle,
   ViewOptionsPopover,
+  PageLastUpdate,
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -24,6 +25,7 @@ export default async function Page(props: {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <ViewOptionsPopover githubUrl={`https://github.com/nitaking/wiki.nitaking.dev/blob/main/content/docs/${page.url === '/' ? 'index' : page.url}.mdx`} className="self-start" />
+      {page.data.lastModified && <PageLastUpdate date={page.data.lastModified} />}
       <DocsBody>
         <MDXContent
           components={getMDXComponents({
