@@ -6,8 +6,11 @@ import {
   DocsTitle,
 } from 'fumadocs-ui/layouts/docs/page';
 
+const GITHUB_REPO_URL = 'https://github.com/nitaking/wiki.nitaking.dev';
+
 interface Commit {
   hash: string;
+  fullHash: string;
   date: string;
   message: string;
   type?: string;
@@ -69,6 +72,7 @@ function getGitCommits(): Commit[] {
       if (match) {
         commits.push({
           hash: hash.substring(0, 7),
+          fullHash: hash,
           date,
           message,
           type: match[1],
@@ -80,6 +84,7 @@ function getGitCommits(): Commit[] {
       } else {
         commits.push({
           hash: hash.substring(0, 7),
+          fullHash: hash,
           date,
           message,
           subject: message,
@@ -215,9 +220,14 @@ export default function ChangelogPage() {
                             {commit.scope}
                           </span>
                         )}
-                        <span className="text-sm text-muted-foreground font-mono">
+                        <a
+                          href={`${GITHUB_REPO_URL}/commit/${commit.fullHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-muted-foreground font-mono hover:underline"
+                        >
                           {commit.hash}
-                        </span>
+                        </a>
                         {commit.pages && commit.pages.length > 0 && (
                           <span className="flex gap-1 flex-wrap">
                             {commit.pages.slice(0, 3).map((page) => {
