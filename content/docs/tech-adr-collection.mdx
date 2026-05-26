@@ -1,0 +1,25 @@
+---
+title: ADR Collection
+description: Decision Records — Records such as ADRs (Architecture Decision Records)
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Callout>
+技術判断の記録集。
+</Callout>
+
+### DBにてENUMを積極採用する _(2026/05)_
+
+3値以上を扱う場合、DBカラムにENUMを積極採用。APIレスポンスも意味のある値で返す。
+数値での識別はコメントや別資料の参照が必要となり、可読性が悪化するアンチパターン。可能な限りENUMを検討する。
+
+**既存ロジックがある場合:** DBカラムは変更なし（影響大）。レスポンスはbreaking changeでなければ変更可。
+**新規ロジック:** ENUMを積極採用。
+
+**Tradeoff:**
+    - Pros: ✅ DBを見ただけで意味がわかり、エンジニア以外も含め可読性が向上
+    - Cons: ⚠️ 値変更がDDL変更になるため、[ENUMの特性](https://dev.mysql.com/doc/refman/8.0/ja/enum.html)を理解した上で採用すること
+
+
+<AIEditedFooter />

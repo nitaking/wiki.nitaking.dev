@@ -1,0 +1,36 @@
+---
+title: Linux / macOS CheatSheet
+description: Useful Linux and macOS commands reference
+---
+
+## Port
+
+### ポートを使用しているプロセスを確認する
+
+```bash
+# lsof でポート番号を指定
+lsof -i :8080
+
+# PIDのみ取得（クリーンな出力）
+lsof -t -i :8080
+
+# netstat を使う
+netstat -tulnp | grep 8080
+
+# ss を使う（netstat のモダンな代替）
+ss -tulnp | grep 8080
+```
+
+### ポートを使用しているプロセスを kill する
+
+```bash
+# lsof で PID を取得して kill
+kill $(lsof -t -i :8080)
+
+# 強制終了
+kill -9 $(lsof -t -i :8080)
+```
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
