@@ -178,6 +178,21 @@ ChatGPTやClaude Researchで深掘りしたトピックは `deep-research-collec
 - h3見出し内にリンクを入れない（hydration error発生）
 - リンクは説明末尾に「**Links:** [URL]」形式で配置
 
+## ADR Collection
+
+### 概要
+ADRや技術判断の記録は `content/docs/tech-adr-collection.mdx` に集約する。個別ページは作らず、h3セクション形式で追記していく。20件を超えたらAccordion形式に切り替える。
+
+### フォーマット
+```markdown
+### タイトル _(YYYY/MM)_
+
+背景の説明。
+
+**決定:** 何を決めたか。
+**注意点:** 気をつけること。
+```
+
 ## デジタルガーデンの原則
 nikiv.devモデルに従って：
 - **Learning in Public**: 知識と学習プロセスの共有
