@@ -27,3 +27,17 @@ Application層 vs UseCase層 はApplication くらいふわっとしていた方
     - Pros: ✅ DBを見ただけで意味がわかり、エンジニア以外も含め可読性が向上
     - Cons: ⚠️ 値変更がDDL変更になるため、[ENUMの特性](https://dev.mysql.com/doc/refman/8.0/ja/enum.html)を理解した上で採用すること
 
+### Webのファイルパス命名規則を `kebab-case` に統一 _(2026/06)_
+
+ディレクトリ・ファイルパスに `kebab-case` / `camelCase` / `snake_case` の3種類が混在していた状態を解消する。
+
+**決定:** 新規ファイル・ディレクトリは全て `kebab-case` で定義する。既存も移行可能なタイミングで順次 `kebab-case` に移行していく。
+
+**理由:**
+- API Routes はURLとして露出するため `kebab-case` が必須
+- ファイルベースルーティングを採用するフロントエンドもURLとの一貫性から `kebab-case` が適切
+- Linux環境では `PascalCase` / `camelCase` のファイル名がモジュール解決エラーになる典型的なバグがある
+- Next.js・React・Node.js の慣例に沿っている
+
+**注意点:** 既存ファイルのリネームは影響範囲を確認してから行うこと。import パスの一括置換が必要になる場合がある。
+
