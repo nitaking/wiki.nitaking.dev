@@ -1,0 +1,48 @@
+---
+title: Focus Border Ring
+description: フォーカス時にborderを太くしてもレイアウトを動かさないためのCSSメモ
+---
+
+# フォーカス時にborderを太くしてもレイアウトを動かさない
+
+`input` などで、通常時は `border: 1px`、フォーカス時は `border: 2px` にすると、要素サイズが変わって周囲のレイアウトが少し動く。
+
+これは見た目として気になるし、フォーム入力中の体験も悪くなる。
+
+## 解決策
+
+フォーカス時に `border-2` を付けるのではなく、`border` は 1px のままにして `ring-inset` を足す。
+
+```tsx
+'border border-fl-bg-border focus:border-fl-chromatic-blue focus:ring-1 focus:ring-inset focus:ring-fl-chromatic-blue'
+```
+
+これで見た目は 2px 相当になるが、要素サイズは変わらない。
+
+## Example
+
+Good: `border` の太さを変えず、内側の `ring` でフォーカス表示を足す。
+
+```tsx
+'border border-fl-bg-border focus:border-fl-chromatic-blue focus:ring-1 focus:ring-inset focus:ring-fl-chromatic-blue'
+```
+
+Bad: フォーカス時に `border-2` を付けると、要素サイズが変わってレイアウトが動く。
+
+```tsx
+'border border-fl-bg-border focus:border-2 focus:border-fl-chromatic-blue'
+```
+
+## アクセシビリティ
+
+`focus:outline-none` を使う場合は、代わりにフォーカス状態が視覚的に分かる表現を必ず用意する。
+
+```tsx
+'focus:border-fl-chromatic-blue focus:ring-1 focus:ring-inset focus:ring-fl-chromatic-blue'
+```
+
+`outline` を消すだけだと、キーボード操作時に現在位置が分からなくなるため避ける。
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
