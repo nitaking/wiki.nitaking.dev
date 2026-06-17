@@ -1,0 +1,52 @@
+---
+title: currentColorで親の文字色を継承する
+description: IconやSpinnerなどの単色装飾要素を親の文字色に追従させるCSS/Tailwind設計メモ
+---
+
+# currentColorで親の文字色を継承する
+
+ボタン内の icon / arrow / spinner など、単色の装飾要素は個別に色を指定せず、可能な限り `currentColor` を使う。
+
+```tsx
+<svg fill="currentColor" />
+<span className="border-current border-t-transparent" />
+```
+
+これにより、親要素の `text-*` class を変えるだけで子要素の色も自然に切り替わる。
+
+```tsx
+<Button className="text-fl-white">
+  <Spinner />
+</Button>
+```
+
+## メリット
+
+- `primary`, `secondary`, `disabled` などの状態ごとに icon 色を個別指定しなくて済む
+- `hover` / `disabled` / `loading` の色変更が親の `text-*` に集約される
+- Button の variant 実装がシンプルになる
+- Figma 上の「テキストとアイコンが同色」の表現に合わせやすい
+
+## 注意
+
+- 多色アイコンには使わない
+- ブランドロゴなど固有色を持つアイコンには使わない
+- 子要素側で `text-*` を指定すると親の色継承が切れる
+
+## Example
+
+```tsx
+const Spinner = () => (
+  <span className="inline-block size-5 rounded-full border-2 border-current border-t-transparent animate-spin" />
+);
+```
+
+`border-current` により、親ボタンの `text-fl-white` / `text-fl-chromatic-blue` / `text-fl-fore-remark` をそのまま利用できる。
+
+## Tags
+
+CSS / Tailwind / Design System / React
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
