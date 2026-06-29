@@ -1,0 +1,102 @@
+---
+title: React refを使う場面
+description: 再利用UIコンポーネントでDOM inputへの命令的操作を透過させるためのref設計メモ
+---
+
+# React refを使う場面
+
+`ref` は値を管理するためではなく、DOM要素へ命令的にアクセスしたいときに使う。
+
+典型例は、フォーム部品をコンポーネント化しても、親から実際の `input` に `focus()` したい場面。
+
+## 使う場面
+
+- 親コンポーネントから `input.focus()` したい
+- フォームライブラリが内部の DOM input を参照する必要がある
+- `PasswordInput` のような複合コンポーネントでも、外側では通常の input と同じように扱いたい
+- selection / scroll / measure など、DOM API が必要な操作をしたい
+
+## TextInputはrefをDOM inputへ渡す
+
+再利用する低レベルUIコンポーネントでは、受け取った `ref` を実際のDOM要素へ渡す。
+
+```tsx
+export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  ({ hasError, className, disabled, id, ...inputProps }, ref) => {
+    const field = useFieldContext();
+    const inputId = id ?? field?.inputId;
+    const isError = hasError ?? field?.hasError ?? false;
+    const ariaDescribedBy = field?.errorId ?? undefined;
+
+    return (
+      <input
+        ref={ref}
+        id={inputId}
+        disabled={disabled}
+        aria-invalid={isError || undefined}
+        aria-describedby={isError ? ariaDescribedBy : undefined}
+        className={clsx(
+          'w-full rounded bg-fl-bg-main text-body-small lg:text-body-large lg:my-pc-5 my-sp-4',
+          'px-pc-15 py-sp-8',
+          'placeholder:text-fl-fore-remark',
+          'focus:outline-none',
+          disabled && 'opacity-30 cursor-not-allowed',
+          isError
+            ? 'border border-fl-chromatic-red ring-1 ring-inset ring-fl-chromatic-red'
+            : 'border border-fl-bg-border focus:border-fl-chromatic-blue focus:ring-1 focus:ring-inset focus:ring-fl-chromatic-blue',
+          className
+        )}
+        {...inputProps}
+      />
+    );
+  }
+);
+```
+
+これにより、`TextInput` を使う側は通常の `input` と同じように `ref` を扱える。
+
+## 複合コンポーネントでもrefを透過する
+
+`PasswordInput` は表示切り替えボタンを持つ複合コンポーネントだが、`ref` は内側の `TextInput` に渡す。
+
+```tsx
+export const PasswordInput = React.forwardRef<
+  HTMLInputElement,
+  PasswordInputProps
+>(({ className, disabled, ...inputProps }, ref) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  return (
+    <div className="relative">
+      <TextInput
+        ref={ref}
+        type={showPassword ? 'text' : 'password'}
+        disabled={disabled}
+        className={clsx('pr-sp-48', className)}
+        {...inputProps}
+      />
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setShowPassword((v) => !v)}
+        className="absolute inset-y-0 right-0 flex items-center px-pc-15 text-fl-fore-remark disabled:cursor-not-allowed disabled:opacity-30"
+        aria-label={showPassword ? 'パスワードを隠す' : 'パスワードを表示する'}
+      >
+        {showPassword ? <VisibilityOn /> : <VisibilityOff />}
+      </button>
+    </div>
+  );
+});
+```
+
+外側のコンポーネント構造は増えても、親から見た参照先は「入力本体」であるべき。
+
+## 判断基準
+
+`ref` は「コンポーネントの外から、その中のDOMへ命令を届けるための穴」と考える。
+
+状態や値は props / state / form state で扱う。`ref` は `focus` や `measure` のように、宣言的なデータフローだけでは扱いにくいDOM操作に限定する。
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
