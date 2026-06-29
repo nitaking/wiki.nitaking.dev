@@ -1,0 +1,28 @@
+---
+title: PHPStorm Meta / Slim
+description: Slim FrameworkのDIルートに型ヒントを付ける .phpstorm.meta.php の設定
+---
+
+`.phpstorm.meta.php` を使って、Slim FrameworkのルートコールバックにIDEの型ヒントを効かせる設定。
+
+```php
+<?php
+// .phpstorm.meta.php
+namespace PHPSTORM_META {
+    override(\Slim\App::get(1), map([
+        '' => '@',
+    ]));
+    override(\Slim\App::post(1), map([
+        '' => '@',
+    ]));
+}
+```
+
+- `override(\Slim\App::get(1), ...)` — 第2引数（コールバック）に対して型マップを適用
+- `map(['' => '@'])` — 渡した文字列をそのままFQCNとして解決する
+- `get` 以外にも `post`, `put`, `delete`, `patch` 等に同様に適用できる
+- プロジェクトルートに置けばPHPStormが自動認識する
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
