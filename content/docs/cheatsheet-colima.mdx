@@ -1,0 +1,19 @@
+---
+title: Colima CheatSheet
+description: Colima commands and workflows reference
+---
+
+## docker compose が unknown command になる
+
+Colima経由でインストールしたDockerで `docker compose` がunknown commandとなり実行できない場合、Homebrewのdocker-composeプラグインをDocker CLIのplugins配置先にシンボリックリンクする。
+
+```bash
+mkdir -p ~/.docker/cli-plugins
+ln -sfn /opt/homebrew/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+```
+
+参考: [Colimaでインストールした Docker の docker compose コマンドが unknown command となり実行できない](https://minerva.mamansoft.net/Notes/%F0%9F%93%9DColima%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%9FDocker%E3%81%AEdocker+compose%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%8Cunknown+command%E3%81%A8%E3%81%AA%E3%82%8A%E5%AE%9F%E8%A1%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84)
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
