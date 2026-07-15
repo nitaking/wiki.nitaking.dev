@@ -34,6 +34,12 @@ uvx --from git+https://github.com/oraios/serena serena-mcp-server --project $(pw
 claude mcp add serena-mcp-server "uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)"
 ```
 
+ダッシュボードの自動起動を無効化する場合は `~/.serena/serena_config.yml` に以下を追記（[参考](https://zenn.dev/coji/articles/serena-mcp-disable-auto-dashboard)）：
+
+```yaml
+web_dashboard_open_on_launch: false
+```
+
 ### Datadog MCP
 https://docs.datadoghq.com/ja/bits_ai/mcp_server/
 
