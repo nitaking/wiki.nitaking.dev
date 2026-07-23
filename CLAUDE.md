@@ -70,7 +70,10 @@ type(scope): subject
 - **命名規則**: カテゴリプレフィックス使用（tech-, philosophy-, workflow-等）
 - **フォーマット**: MDX形式、`title` と `description` を含むfrontmatter必須
 - **ページアイコン**: frontmatterの `icon:` は使わない（サイドバーがうるさくなるため）
-- **エビデンスリンク**: 挙動理解・仕様系のtechメモには `## References` セクション（`## Tags` の前）を設け、公式ドキュメント等へのリンクを注釈付きで載せる。仕様はWebFetchで原文確認してから書く
+- **本文見出し**: h1はfumadocsがfrontmatterの `title` から表示するため、本文の見出しはh2（`##`）から始める
+- **エビデンスリンク**: 挙動理解・仕様系のtechメモにはReferencesセクション（Tagsの前）を設け、公式ドキュメント等へのリンクを注釈付きで載せる。仕様はWebFetchで原文確認してから書く
+- **引用**: 公式ドキュメント等からの引用は本文中にblockquote（`>`）として記載する。リンクの注釈に引用文を詰め込まない
+- **文体**: 人間が書いたように自然な文章で。矢印記法（`A → B`）や記号的な省略をせず、文章で説明する
 - **AI編集表示**: AI編集したMDXファイルは、ファイル末尾に以下を追加
   ```mdx
   import { AIEditedFooter } from '@/components/ai-edited-footer';
