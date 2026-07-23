@@ -70,6 +70,7 @@ type(scope): subject
 - **命名規則**: カテゴリプレフィックス使用（tech-, philosophy-, workflow-等）
 - **フォーマット**: MDX形式、`title` と `description` を含むfrontmatter必須
 - **ページアイコン**: frontmatterの `icon:` は使わない（サイドバーがうるさくなるため）
+- **エビデンスリンク**: 挙動理解・仕様系のtechメモには `## References` セクション（`## Tags` の前）を設け、公式ドキュメント等へのリンクを注釈付きで載せる。仕様はWebFetchで原文確認してから書く
 - **AI編集表示**: AI編集したMDXファイルは、ファイル末尾に以下を追加
   ```mdx
   import { AIEditedFooter } from '@/components/ai-edited-footer';
