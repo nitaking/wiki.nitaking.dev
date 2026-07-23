@@ -1,0 +1,75 @@
+---
+title: GitHub App Tokenのスコープ
+description: actions/create-github-app-tokenのowner/repositories/permission-*指定によるトークンスコープの挙動メモ
+---
+
+# GitHub App Tokenのスコープ
+
+`actions/create-github-app-token` で発行されるトークンのスコープは、`owner` / `repositories` / `permission-*` の指定の組み合わせで決まる。直感に反する挙動があるので整理しておく。
+
+## ownerのみ指定するとinstallation全体スコープになる
+
+`owner` だけを指定すると、そのGitHub App installationがアクセスできる全リポジトリへの権限を持つトークンが発行される。`repositories` も `permission-*` も未指定なら、インストール時に設定された権限がそのまま使われる。
+
+```yaml
+- uses: actions/create-github-app-token@v2
+  id: app-token
+  with:
+    app-id: ${{ secrets.APP_ID }}
+    private-key: ${{ secrets.APP_PRIVATE_KEY }}
+    owner: flier-inc
+```
+
+## ownerを省略すると実行元リポジトリのみになる
+
+`owner` を省略した場合、デフォルトでワークフロー実行元リポジトリ（context.repo）だけにスコープが絞られる。複数リポジトリを操作したいワークフローではここが罠になる。
+
+```yaml
+- uses: actions/create-github-app-token@v2
+  id: app-token
+  with:
+    app-id: ${{ secrets.APP_ID }}
+    private-key: ${{ secrets.APP_PRIVATE_KEY }}
+    # owner未指定 → 実行元リポジトリのみ
+```
+
+## permission-*は指定した瞬間にallowlist方式に切り替わる
+
+`permission-*` は「all-or-nothing」ではない。正確には、一つでも `permission-*` を指定すると、指定していない権限は明示的に none として扱われる。
+
+- `permission-*` を一つも指定しない → GitHub App自体の設定権限がそのまま全部使われる
+- `permission-*` を一つでも指定する → 指定した権限だけが有効になり、他は自動的に除外される（App設定でその権限を持っていてもトークンには含まれない）
+
+```yaml
+- uses: actions/create-github-app-token@v2
+  id: app-token
+  with:
+    app-id: ${{ secrets.APP_ID }}
+    private-key: ${{ secrets.APP_PRIVATE_KEY }}
+    owner: flier-inc
+    permission-contents: read
+    # contents:read のみ有効。issuesやpull-requestsなど
+    # App側で許可されている他の権限はすべてnoneになる
+```
+
+「必要な権限を1つ追加しただけ」のつもりで `permission-*` を書くと、それまで暗黙に使えていた他の権限が全部落ちる。最小権限化には便利だが、指定するなら必要な権限を漏れなく列挙すること。
+
+この挙動はアクションのREADMEには明記されておらず、背後のREST API（installation access token作成）の仕様に由来する。公式ドキュメントには「If permissions is not specified, the installation access token will have all of the permissions that were granted to the app.」とあり、指定した場合はそのpermissionsのみが付与される。
+
+## 注意
+
+- `permission-*` を後から追加した際に、既存処理が権限不足で壊れていないか確認する
+- installation全体スコープのトークンは影響範囲が広いため、必要なければ `repositories` で絞る
+
+## References
+
+- [actions/create-github-app-token README](https://github.com/actions/create-github-app-token) — owner / repositories によるスコープの仕様（"If `owner` is set and `repositories` is empty, access will be scoped to all repositories in the provided repository owner's installation." / "If `owner` and `repositories` are empty, access will be scoped to only the current repository."）
+- [GitHub REST API: Create an installation access token for an app](https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app) — permissions省略時は全installation権限、指定時は指定分のみ付与される仕様
+
+## Tags
+
+GitHub Actions / GitHub Apps / CI/CD / Security
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
