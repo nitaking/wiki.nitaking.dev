@@ -11,6 +11,18 @@ git config rebase.autosquash true
 ```
 Auto-squash設定により、`git commit --fixup` や `git commit --squash` でコミットした際に、`git rebase -i` で自動的に配置。
 
+## .gitignore
+
+.gitignoreが効かないとき（追跡済みファイルをキャッシュから削除）：
+
+```bash
+git rm -r --cached .
+git add .
+git commit -m ".gitignore is now working"
+```
+
+refs: https://qiita.com/Potof_/items/c75eba9cfa72819506de
+
 ## Slack
 
 ```
