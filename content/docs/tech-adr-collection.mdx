@@ -41,3 +41,19 @@ Application層 vs UseCase層 はApplication くらいふわっとしていた方
 
 **注意点:** 既存ファイルのリネームは影響範囲を確認してから行うこと。import パスの一括置換が必要になる場合がある。
 
+### wikiのAI検索をAsk AI + Gemini無料枠で構築 _(2026/07)_
+
+wiki.nitaking.devにAI検索を導入するにあたり、Inkeep等の有料SaaSではなく、fumadocs公式のAsk AIテンプレート＋自前APIルートの構成を選んだ。
+
+**決定:** fumadocs CLIでscaffoldしたAsk AIチャット（AISearch系コンポーネント＋`/api/chat`）を採用。LLMはGemini API無料枠（`@ai-sdk/google`、既定 `gemini-3.6-flash`、`GEMINI_MODEL` で変更可）を使い、回答はFlexSearchの検索ツールでwiki本文にグラウンディングする。あわせて `llms.txt` / `llms-full.txt` / `.mdx` サフィックスのMarkdownルートも公開し、外部AIエージェントからも読める形にした。
+
+**理由:**
+- Gemini無料枠（10リクエスト/分・1,500リクエスト/日程度）で個人wikiのトラフィックには十分。ランニングコストゼロ
+- OpenRouterの `:free` モデルは無料モデルの入れ替わりが激しく運用が不安定
+- 検索インデックスは既存の `/api/search` と同じFlexSearchで完結し、外部サービス依存がない
+
+**注意点:**
+- モデルIDは世代交代で廃止されることがある。動かなくなったら `GEMINI_MODEL` を新しいFlash系IDに差し替える
+- AI SDK v7ではsystemプロンプトを `instructions` オプションで渡す（messages配列にsystem roleを入れるとエラー）
+- Ask AIコンポーネントは `useEffectEvent` を使うためReact 19.2以上が必要
+
