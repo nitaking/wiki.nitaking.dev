@@ -1,0 +1,84 @@
+---
+title: PhpStorm + Docker PHPUnit
+description: PhpStormからDockerコンテナ内のPHPを使ってPHPUnitを実行するための設定手順
+---
+
+## PhpStormでDockerのPHPを使ってUnitTestを実行する
+
+ローカルにPHPを入れずにDocker上で開発している場合、PhpStormのテストランナーもコンテナ内のPHPを使う必要がある。ホストのPHPを見ている状態ではPHPUnitのバージョンが読めず、テストも実行できない。リモートインタープリターとしてDockerのコンテナを登録すれば、エディタ上の実行ボタンからそのままテストが走るようになる。
+
+必要なプラグインはPHPとPHP Dockerの2つ。どちらもPhpStormには同梱されているので、無効化していなければそのまま進められる。
+
+## CLI Interpreterにコンテナを登録する
+
+まず `Settings` の `PHP > Test Frameworks` を開き、`+` から `PHPUnit by Remote Interpreter` を選ぶ。Interpreterの欄で `...` を押すとCLI Interpreterの一覧が開くので、ここで新しいインタープリターを作る。
+
+種別は `From Docker, Vagrant, VM, WSL, Remote...` を選択し、Serverの `New` からDockerへの接続を作る。macOSの場合はDocker for Macを選び、接続先のコンテキストを指定する。Docker Desktopを使っていてもデフォルトのままでは接続に失敗することがあり、コンテキストを明示的に切り替える（Docker Desktopでは `desktop-linux`）と通った。ここが一番つまずきやすいところで、接続できていればダイアログ下部に接続成功のメッセージが出る。
+
+Serverを作ったあとは、docker-compose.ymlをフルパスで指定し、Serviceの欄でPHPが動いているサービスを選ぶ。テスト実行に必要な環境変数があればEnvironment variablesにも設定しておく。
+
+そしてLifecycleでは `Connect to existing container` を選ぶ。ここを既定のままにするとテスト実行のたびに新しいコンテナが作られてしまうため、起動済みのコンテナに接続する設定にしておく。
+
+保存してPHPのバージョンが読み込まれていれば、コンテナ内のPHPを掴めている。
+
+## Path mappingsを設定する
+
+作成したインタープリターをTest FrameworksのCLI Interpreterに指定すると、Path mappingsの欄が現れる。これはホスト側のファイルパスとコンテナ内のファイルパスの対応表で、設定しないとテストが実行できない。
+
+PhpStormはテスト実行時、コンテナの中でおおよそ次のようなコマンドを叩いている。
+
+```bash
+docker exec <container> php vendor/bin/phpunit \
+  --configuration /var/www/xx/phpunit.xml \
+  /var/www/xx/tests/FooTest.php
+```
+
+一方でIDEが知っているのはホスト側のパス（`/Users/{user}/code/foo/tests/FooTest.php`）だけで、そのパスはコンテナの中には存在しない。そのまま渡せば `No such file or directory` で落ちる。この読み替えを担うのがPath mappingsで、逆方向にも使われる。テスト失敗時のスタックトレースに出る `/var/www/xx/...` をクリックしてホスト側の該当ファイルが開くのも、このマッピングがあるからである。
+
+入れる値はdocker-compose.ymlのvolumesをそのまま写せばよい。
+
+```yaml
+services:
+  php:
+    volumes:
+      - .:/var/www/xx        # コロンの左がホスト、右がコンテナ
+```
+
+この場合、Local pathにはホスト側のプロジェクトルートの絶対パス（`/Users/{user}/code/foo`）、Remote pathにはコンテナ内のマウント先（`/var/www/xx`）を指定する。compose側の `.` はcomposeファイルのある場所を指す相対パスなので、Local pathはその絶対パスになる。`./src:/var/www/xx/src` のようにサブディレクトリだけをマウントしている場合は、マウント単位で対応させる。
+
+Remote pathに自信がないときは、コンテナに入って確認するのが確実。
+
+```bash
+docker compose exec php pwd     # WORKDIR。だいたいこれがRemote path
+docker compose exec php ls -la  # ホストのファイルが見えていればマウント先が合っている
+```
+
+`docker inspect <container> --format '{{json .Mounts}}'` でも、Source（ホスト）とDestination（コンテナ）の対応がそのまま確認できる。Local pathについてはPhpStormが `$PROJECT_DIR$` として自動で埋めてくれることもあり、その場合は触らなくてよい。
+
+なお、WindowsやmacOSではDockerデーモン自体が仮想マシン上で動いているため、マウント可能なローカルパスの外にあるディレクトリはバインドマウントできない。プロジェクトがDocker Desktopの共有ディレクトリの範囲内にあるかは事前に確認しておく。
+
+## PHPUnit側の設定
+
+Path mappingsまで設定できていれば、Composerのオートローダーとdefault configuration fileが自動で埋まることが多い。埋まっていない場合は、`Use Composer autoloader` にチェックを入れて `vendor/autoload.php` のフルパスを、Test Runnerの `Default configuration file` に `phpunit.xml` のフルパスを指定する。いずれもコンテナ内から見えるパスで書く。
+
+この状態でPHPUnitのバージョンが表示されていれば設定完了。テストファイルやディレクトリを右クリックして `Run` を選ぶか、エディタ左端の実行ボタンからテストが走る。
+
+## つまずいた点
+
+- Dockerへの接続はコンテキストの指定次第でうまくいかないことがある。まずここを疑う
+- Lifecycleを `Connect to existing container` にしないと、実行ごとにコンテナが立ち上がって時間もリソースも無駄になる
+- PHPUnitのバージョンが表示されないままテストを実行しても失敗する。バージョンが読めているかを設定完了の判断基準にする
+
+## References
+
+- [[PHP]IntelliJ IDEA(PHPStorm)にてDocker環境上のPHPUnitを実行する](https://zenn.dev/third_tech/articles/e7d662f45b6b4a) — CLI InterpreterからPath mappingsまでの一連の手順。この記事に沿って設定した
+- [Using PHPUnit Framework | PhpStorm Documentation](https://www.jetbrains.com/help/phpstorm/using-phpunit-framework.html) — リモートインタープリターではPHPUnitの手動設定が必要になる旨の公式記述
+- [Docker | PhpStorm Documentation](https://www.jetbrains.com/help/phpstorm/docker.html) — Docker接続の作成と、macOS/Windowsにおける仮想マシンのパスマッピングの制約
+
+## Tags
+
+PhpStorm / Docker / PHP / PHPUnit / Testing
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
