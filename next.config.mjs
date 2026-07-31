@@ -15,6 +15,15 @@ const config = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/changelog',
+        destination: '/meta/changelog',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(config);
