@@ -23,6 +23,20 @@ git commit -m ".gitignore is now working"
 
 refs: https://qiita.com/Potof_/items/c75eba9cfa72819506de
 
+## Cache
+
+### キャッシュ削除
+```bash
+# ファイル全体のキャッシュ削除
+git rm -r --cached .
+
+# ファイルを指定してキャッシュ削除
+git rm -r --cached [ファイル名]
+```
+`.gitignore` に追加したファイルがすでにトラッキングされている場合に使用。
+
+refs: https://qiita.com/kohei_wd/items/f1d224c9257d1e242b58
+
 ## Slack
 
 ```
