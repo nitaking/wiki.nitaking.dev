@@ -31,6 +31,18 @@ kill $(lsof -t -i :8080)
 kill -9 $(lsof -t -i :8080)
 ```
 
+## Cron
+
+### cronの実行履歴を確認する
+
+```bash
+# Debian/Ubuntu系
+grep CRON /var/log/syslog
+
+# RHEL/CentOS系
+grep CRON /var/log/cron
+```
+
 import { AIEditedFooter } from '@/components/ai-edited-footer';
 
 <AIEditedFooter />
