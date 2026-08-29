@@ -12,11 +12,12 @@ import {
   useState,
 } from 'react';
 import { flushSync } from 'react-dom';
-import { Loader2, MessageCircleIcon, RefreshCw, SearchIcon, Send, X } from 'lucide-react';
+import { Loader2, MessageCircleIcon, RefreshCw, SearchIcon, Send, Sparkles, X } from 'lucide-react';
 import { cn } from '../../lib/cn';
 import { buttonVariants } from '../ui/button';
 import { useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DefaultChatTransport, type Tool, type UIMessage, type UIToolInvocation } from 'ai';
+import { useSearch as useFumadocsSearch } from 'fumadocs-ui/components/dialog/search';
 import { Markdown } from '../markdown';
 
 export type ChatUIMessage = UIMessage<
@@ -114,6 +115,35 @@ export function AISearchInputActions() {
 }
 
 const StorageKeyInput = '__ai_search_input';
+
+export function AISearchSearchTrigger() {
+  const { search, onOpenChange } = useFumadocsSearch();
+  const { setOpen } = useAISearchContext();
+  const query = search.trim();
+
+  return (
+    <button
+      type="button"
+      className={cn(
+        buttonVariants({
+          color: 'ghost',
+          size: 'sm',
+          className: 'w-full justify-start gap-2 rounded-none px-4',
+        }),
+      )}
+      disabled={query.length === 0}
+      onClick={() => {
+        localStorage.setItem(StorageKeyInput, query);
+        onOpenChange(false);
+        setOpen(true);
+      }}
+    >
+      <Sparkles className="size-4" />
+      <span className="truncate">Ask AI about “{query || 'your question'}”</span>
+    </button>
+  );
+}
+
 export function AISearchInput(props: ComponentProps<'form'>) {
   const { status, sendMessage, stop } = useChatContext();
   const [input, setInput] = useState(() => localStorage.getItem(StorageKeyInput) ?? '');

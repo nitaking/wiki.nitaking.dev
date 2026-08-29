@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { Agentation } from 'agentation';
+import { AISearch, AISearchSearchTrigger } from '@/components/ai/search';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,7 +27,17 @@ export default function Layout({ children }: { children: ReactNode }) {
           src="https://tinylytics.app/embed/U9qfcSxsEP_izZvF-UUN.js"
           strategy="afterInteractive"
         />
-        <RootProvider>{children}</RootProvider>
+        <AISearch>
+          <RootProvider
+            search={{
+              options: {
+                footer: <AISearchSearchTrigger />,
+              },
+            }}
+          >
+            {children}
+          </RootProvider>
+        </AISearch>
         {process.env.NODE_ENV === 'development' && <Agentation />}
       </body>
     </html>
