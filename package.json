@@ -15,6 +15,7 @@
     "@orama/orama": "^3.1.6",
     "@orama/stopwords": "^3.1.6",
     "@orama/tokenizers": "^3.1.6",
+    "@vercel/analytics": "^2.0.1",
     "ai": "^7.0.35",
     "class-variance-authority": "^0.7.1",
     "cnfast": "^0.0.8",

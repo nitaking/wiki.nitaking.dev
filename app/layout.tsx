@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { Agentation } from 'agentation';
+import { Analytics } from '@vercel/analytics/next';
 import { AISearch } from '@/components/ai/search';
 
 const inter = Inter({
@@ -34,6 +35,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {children}
           </RootProvider>
         </AISearch>
+        <Analytics />
         {process.env.NODE_ENV === 'development' && <Agentation />}
       </body>
     </html>
