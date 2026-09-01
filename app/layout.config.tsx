@@ -23,8 +23,8 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       type: 'icon',
-      text: 'omg.lol',
-      url: 'https://nitaking.omg.lol',
+      text: 'me.nitaking.dev',
+      url: 'https://me.nitaking.dev',
       icon: <AtSign />,
       external: true,
     },
