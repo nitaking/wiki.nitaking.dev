@@ -4,6 +4,7 @@ import {
   DocsBody,
   DocsDescription,
   DocsTitle,
+  MarkdownCopyButton,
   ViewOptionsPopover,
   PageLastUpdate,
 } from 'fumadocs-ui/layouts/docs/page';
@@ -19,12 +20,19 @@ export default async function Page(props: {
   if (!page) notFound();
 
   const MDXContent = page.data.body;
+  const markdownUrl = `/llms.mdx${page.url}`;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
-      <ViewOptionsPopover githubUrl={`https://github.com/nitaking/wiki.nitaking.dev/blob/main/content/docs/${page.url === '/' ? 'index' : page.url}.mdx`} className="self-start" />
+      <div className="flex flex-row items-center gap-2 border-b pt-2 pb-6">
+        <MarkdownCopyButton markdownUrl={markdownUrl} />
+        <ViewOptionsPopover
+          markdownUrl={markdownUrl}
+          githubUrl={`https://github.com/nitaking/wiki.nitaking.dev/blob/main/content/docs/${page.url === '/' ? 'index' : page.url}.mdx`}
+        />
+      </div>
       <DocsBody>
         <MDXContent
           components={getMDXComponents({
