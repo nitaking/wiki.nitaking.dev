@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { Agentation } from 'agentation';
-import { AISearch, AISearchSearchTrigger } from '@/components/ai/search';
+import { AISearch } from '@/components/ai/search';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,11 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         />
         <AISearch>
           <RootProvider
-            search={{
-              options: {
-                footer: <AISearchSearchTrigger />,
-              },
-            }}
+            search={{}}
           >
             {children}
           </RootProvider>
