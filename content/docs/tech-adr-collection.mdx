@@ -41,6 +41,49 @@ Application層 vs UseCase層 はApplication くらいふわっとしていた方
 
 **注意点:** 既存ファイルのリネームは影響範囲を確認してから行うこと。import パスの一括置換が必要になる場合がある。
 
+### ADRを外部ツール管理 + リポジトリにサマリ参照を置くパターン _(2026/08)_
+
+ADRをNotionなどの外部ドキュメントツールで管理しているプロジェクトで、リポジトリ側からもADRの存在を検知できるようにする運用パターン。
+
+**決定:** マスタは外部ツール（Notion等）に置き、リポジトリの `docs/adr/` にはサマリ+外部ツールへの参照リンクだけを配置する。
+
+**構成:**
+- `docs/adr/README.md` に位置づけ・命名規則・一覧表を記載
+- 個別ADRは `docs/adr/NNNN-english-slug.md`（連番4桁+ケバブケース）で作成
+- 各ADRファイルの冒頭にMasterリンクとして外部ツールのURLを明記
+
+**個別ADRのフォーマット:**
+
+```markdown
+# ADR-NNNN: タイトル
+
+| 項目 | 内容 |
+| --- | --- |
+| Date | YYYY-MM-DD |
+| Master | [外部ツールのリンク] ← 詳細・経緯のマスタはこちら |
+
+## Context
+背景と課題。
+
+## Decision
+決定事項。
+
+## Consequences
+採用による影響。
+
+## Other Options（不採用案）
+検討したが不採用とした選択肢とその理由。
+```
+
+**メリット:**
+- PRレビューやコード読解の場でADRの方針をすぐ参照できる
+- 外部ツールを使わないメンバーにもADRの存在が伝わる
+- 詳細な議論・比較検討は外部ツール側で自由に更新できる
+
+**注意点:**
+- リポジトリ側の更新は結論の要約が変わったときだけ。詳細の追記や議論の更新は外部ツール側のみで行う
+- README.mdの一覧表は新規ADR追加時に忘れず更新する
+
 ### wikiのAI検索をAsk AI + Gemini無料枠で構築 _(2026/07)_
 
 wiki.nitaking.devにAI検索を導入するにあたり、Inkeep等の有料SaaSではなく、fumadocs公式のAsk AIテンプレート＋自前APIルートの構成を選んだ。
@@ -56,4 +99,8 @@ wiki.nitaking.devにAI検索を導入するにあたり、Inkeep等の有料SaaS
 - モデルIDは世代交代で廃止されることがある。動かなくなったら `GEMINI_MODEL` を新しいFlash系IDに差し替える
 - AI SDK v7ではsystemプロンプトを `instructions` オプションで渡す（messages配列にsystem roleを入れるとエラー）
 - Ask AIコンポーネントは `useEffectEvent` を使うためReact 19.2以上が必要
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
 

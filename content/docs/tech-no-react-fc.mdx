@@ -1,0 +1,28 @@
+---
+title: No React.FC
+description: React.FCを使わず、引数に直接型付けするスタイルを推奨する理由
+---
+
+**tip:** `React.FC` は非推奨の流れです。新規コンポーネントでは引数に直接型付けするスタイルを推奨します。
+
+```ts
+// Before
+export const Foo: React.FC<Props> = ({ ... }) => { ... }
+
+// After
+export const Foo = ({ ... }: Props) => { ... }
+```
+
+**メリット:**
+- ジェネリクス型パラメータ (`<T>`) が使える
+- 戻り値の型が明示的になり、意図しない返却を防げる
+- React公式やコミュニティでも推奨されているスタイル
+
+**デメリット:**
+- `memo` / `forwardRef` でラップすると DevTools の表示名が消えるため、`displayName` の明示が必要になる場合がある
+
+既存コードは触るついでに移行でOKです。
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
