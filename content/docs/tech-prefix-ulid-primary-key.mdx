@@ -1,0 +1,30 @@
+---
+title: prefix_ULIDを主キーにする
+description: prefix付きULIDをそのまま主キーとして使うメモ
+---
+
+取り回しやすさ優先なら、`prefix_ULID` をそのまま主キーにする。
+
+```sql
+id CHAR(30) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+PRIMARY KEY (id)
+```
+
+```text
+usr_01JQ4R6K8ZP2XK8A3Y7H4D9M1B
+```
+
+- API・ログ・管理画面・SQLで同じIDを使える
+- IDの種別が見て分かる
+- `BIGINT` と公開IDの二重管理が不要
+- ULIDは時系列順なので、UUIDv4よりDBインデックスにも優しい
+
+大規模テーブルや多くの外部キーを持つテーブルで性能・容量が問題になってから、`BIGINT` の内部PKを足す検討で十分。
+
+## References
+
+- [ULID Specification](https://github.com/ulid/spec) - ULIDの文字列表現と辞書順ソートの仕様
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
