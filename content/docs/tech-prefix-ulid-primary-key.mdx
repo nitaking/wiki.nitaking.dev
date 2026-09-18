@@ -21,9 +21,99 @@ usr_01JQ4R6K8ZP2XK8A3Y7H4D9M1B
 
 大規模テーブルや多くの外部キーを持つテーブルで性能・容量が問題になってから、`BIGINT` の内部PKを足す検討で十分。
 
+## ULIDとUUIDの違い
+
+どれも128 bitの重複しにくいID。違いは時系列に並ぶか、文字列表現、標準性。
+
+| 観点 | ULID | UUIDv4 | UUIDv7 |
+| --- | --- | --- | --- |
+| 例 | `01JQ4R6K8ZP2XK8A3Y7H4D9M1B` | `550e8400-e29b-41d4-a716-446655440000` | `019535d9-3df7-79fb-b466-fa907fa17f9e` |
+| 文字数 | 26文字 | 36文字 | 36文字 |
+| エンコード | Crockford Base32 | 16進数 | 16進数 |
+| 時刻情報 | 先頭48 bit | なし | 先頭48 bit |
+| 時系列ソート | できる | できない | できる |
+| 標準化 | RFC標準ではない | RFC 9562 | RFC 9562 |
+| DBインデックス | 連続挿入になりやすい | ランダム挿入 | 連続挿入になりやすい |
+| ライブラリ互換性 | UUIDより少ない | 非常に広い | 広いがv4より新しい |
+
+ULIDは `48-bit timestamp + 80-bit randomness`。短くて読みやすく、APIの公開ID、ログ、URLに載せるIDとして扱いやすい。
+
+UUIDv4はランダム。順序性はないが、IDから生成時刻を推測されたくない場合や既存のUUID運用に合わせる場合に向く。
+
+UUIDv7は `48-bit timestamp + version/variant bits + randomness`。ULIDの時系列性に、UUIDの標準性とエコシステム互換性を持たせたような選択肢。
+
+UUIDはほかにも、名前空間と入力値から決定的に生成するv5や、時刻・ノード情報を使うv1 / v6がある。今から時系列IDを新規採用するなら、基本はv7でよさそう。
+
+- ULIDは26文字で読みやすく、文字列のまま時系列に並べやすい。ただしIETF/RFC標準ではない
+- UUIDv7も時系列に並べやすく、RFC標準やライブラリ互換性を優先するならこちら
+- 人が触れるprefix付きIDは `usr_<ULID>`、標準UUIDエコシステムを優先するなら `usr_<UUIDv7>`
+
+## どれを選ぶか
+
+- 人が目視・口頭・URLで扱うprefix付きIDならULID
+- RFC標準、DB、ORM、外部サービスとの相互運用性を優先するならUUIDv7
+- 順序性が不要、または生成時刻を推測されたくないならUUIDv4
+
+人が触れる公開IDは `usr_<ULID>`、標準UUIDエコシステムを最優先するなら `usr_<UUIDv7>` がよい。
+
+```text
+usr_01JQ4R6K8ZP2XK8A3Y7H4D9M1B
+ord_01JQ4R71T6F4K2Y9N8C3P5W7XA
+ntf_01JQ4R7CB2H5S9D6K1V8M3YQZE
+```
+
+プレフィックスはエンティティ種別だけにする。`usr_` や `pay_` はよいが、状態やテナントを含む `active_user_` や `jp_user_` は避ける。後からプレフィックスを変えたくなっても、既存IDは原則そのまま維持する。
+
+## RDBMSごとの扱いやすさ
+
+| RDBMS | UUID | ULID | メモ |
+| --- | --- | --- | --- |
+| PostgreSQL 18 | `uuid`型、`uuidv4()`、`uuidv7()`あり | 標準機能にはない | UUIDなら一番素直 |
+| MariaDB 11.7 | `UUID`型、`UUID_v4()`、`UUID_v7()`あり | 標準機能にはない | UUIDv7をDB側でも生成できる |
+| MySQL 8.4 | 専用型なし。`BINARY(16)`と変換関数を使う | 標準機能にはない | アプリ生成ならどちらも問題ない |
+| SQLite | 専用型・生成関数なし | 専用型・生成関数なし | `BLOB(16)`または`TEXT`で持つ |
+
+UUIDをDBの機能で素直に扱いたいならPostgreSQL 18。MariaDB 11.7もUUIDv7まで揃っている。
+
+ULIDは主要RDBMSにネイティブ型がほぼないので、どのDBでも基本はアプリ側で生成する。`prefix_ULID` を文字列のまま使うなら、MySQLも十分扱いやすい。
+
+## MySQLでは
+
+今回のようにAPI・ログ・管理画面・SQLで同じ `prefix_ULID` を使いたいなら、そのまま `CHAR(30)` でよい。
+
+```sql
+id CHAR(30) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+PRIMARY KEY (id)
+```
+
+`ascii_bin` ならULIDの時系列順を維持できる。
+
+prefixなしのUUIDを容量優先で持つなら `BINARY(16)`。
+
+```sql
+id BINARY(16) NOT NULL,
+PRIMARY KEY (id)
+```
+
+MySQL 8.4には `UUID_TO_BIN()` と `BIN_TO_UUID()` があるが、`UUID()` が生成するのはv1。UUIDv7のネイティブ生成には未対応なので、アプリ側で生成して `UUID_TO_BIN(?)` で格納する。`swap_flag = 1` はv1の時刻部分向けなので、UUIDv7には使わない。
+
+ULIDもprefixを捨ててバイナリ変換すれば16 bytesにできるが、可読性と取り回しやすさを優先する今回の目的には `CHAR(30)` のほうが合う。
+
+## 実務上の注意
+
+- ULIDとUUIDv7は時刻を含むため、生成時刻をおおむね推測できる
+- 同一ミリ秒内の厳密な順序は通常保証されない。必要なら連番やタイブレーカーを別に持つ
+- ULIDとUUID本体は16 bytesだが、prefixを含む文字列は16 bytesではない
+- 大規模テーブルや外部キーの容量が問題になったら、内部PKを `BIGINT AUTO_INCREMENT`、公開IDをULIDまたはUUIDv7に分ける
+
 ## References
 
 - [ULID Specification](https://github.com/ulid/spec) - ULIDの文字列表現と辞書順ソートの仕様
+- [RFC 9562: Universally Unique IDentifiers](https://www.rfc-editor.org/rfc/rfc9562.html) - UUID各バージョンの形式とDB利用時の考慮事項
+- [PostgreSQL: UUID Type / UUID Functions](https://www.postgresql.org/docs/current/datatype-uuid.html) - `uuid`型とUUIDv4 / UUIDv7生成関数
+- [MySQL 8.4: Miscellaneous Functions](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/miscellaneous-functions.html) - `UUID()`、`UUID_TO_BIN()`、`BIN_TO_UUID()`の仕様
+- [MariaDB: UUID Data Type](https://mariadb.com/docs/server/reference/data-types/string-data-types/uuid-data-type) - ネイティブUUID型と格納順
+- [MariaDB: UUID_v7](https://mariadb.com/docs/server/reference/sql-functions/secondary-functions/miscellaneous-functions/uuid_v7) - UUIDv7生成関数
 
 import { AIEditedFooter } from '@/components/ai-edited-footer';
 
