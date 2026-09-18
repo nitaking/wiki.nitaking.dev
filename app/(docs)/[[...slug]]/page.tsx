@@ -20,7 +20,7 @@ export default async function Page(props: {
   if (!page) notFound();
 
   const MDXContent = page.data.body;
-  const markdownUrl = `/llms.mdx${page.url}`;
+  const markdownUrl = page.url === '/' ? '/llms.mdx/' : `${page.url}.md`;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
