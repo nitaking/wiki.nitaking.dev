@@ -1,6 +1,6 @@
-# CLAUDE.md
+# Repository Guidelines
 
-このファイルは、本リポジトリでの作業時のClaude Code（claude.ai/code）へのガイダンスを提供します。
+このファイルは、本リポジトリで作業するAIエージェント向けのガイドラインです。
 
 ## 重要事項
 - このドキュメント内のすべての指示は**必須**です。明示的に記載がない限り、オプションではありません。
@@ -29,7 +29,7 @@
 
 ### コンテンツ構成
 - **フラット構造**: nikiv.devにインスパイアされた完全フラット構造を採用
-- **Reflect連携**: 動的コンテンツはReflectリンクとして `index.mdx` に統合
+- **コンテンツのマスター**: 公開する知識はMDX/Gitをマスターとし、Reflectはメモ・収集・下書きに利用
 - **ナビゲーション**: `meta.json` で手動管理
 - **ファイル命名規則**: カテゴリプレフィックス（tech-, philosophy-, workflow-, photography-等）で整理
 - **サブディレクトリ**: `meta/`（changelog, site-history）と `claude/` のみ
@@ -40,7 +40,7 @@ index / uses → Personal → Tech → Workflow → References → Meta(collapsi
 ```
 
 ### 主要ファイル
-- `content/docs/index.mdx` — Map of Contents（Reflectリンク集約）
+- `content/docs/index.mdx` — Map of Contents
 - `content/docs/meta.json` — サイドバーナビゲーション定義
 - `app/(docs)/layout.tsx` — DocsLayoutとサイドバーカスタマイズ
 - `components/sidebar-item.tsx` — truncate対応のカスタムサイドバーItem
@@ -69,12 +69,16 @@ type(scope): subject
 - **ファイル配置**: 全て `/content/docs/` 直下にフラット配置
 - **命名規則**: カテゴリプレフィックス使用（tech-, philosophy-, workflow-等）
 - **フォーマット**: MDX形式、`title` と `description` を含むfrontmatter必須
+- **原文優先**: ユーザーが渡したメモの構造、語調、情報量を維持する。明示的な依頼なしに長文化、要約の再展開、一般論の追加をしない
+- **AI生成の抑制**: frontmatterや体裁を整えるために必要な最小限を除き、AIが新しい本文を補わない。内容を拡張した方がよい場合も、依頼がなければ本文へ追加しない
+- **AIコメントの区別**: ユーザーがAIコメントとして示した文章は、本人の意見へ書き換えず「AIコメント」などの表記と引用形式を維持する
+- **許容する補足**: 公式サイトや一次情報へのリンクとReferencesセクションは追加してよい。本文の主張や結論は増やさない
 - **ページアイコン**: frontmatterの `icon:` は使わない（サイドバーがうるさくなるため）
 - **本文見出し**: h1はfumadocsがfrontmatterの `title` から表示するため、本文の見出しはh2（`##`）から始める
 - **エビデンスリンク**: 挙動理解・仕様系のtechメモにはReferencesセクション（Tagsの前）を設け、公式ドキュメント等へのリンクを注釈付きで載せる。仕様はWebFetchで原文確認してから書く
 - **引用**: 公式ドキュメント等からの引用は本文中にblockquote（`>`）として記載する。リンクの注釈に引用文を詰め込まない
 - **文体**: 人間が書いたように自然な文章で。矢印記法（`A → B`）や記号的な省略をせず、文章で説明する
-- **AI編集表示**: AI編集したMDXファイルは、ファイル末尾に以下を追加
+- **AI編集表示**: AIが本文を新規生成または大幅に編集したMDXファイルは、ファイル末尾に以下を追加する。メモの転記、体裁調整、frontmatterやReferencesの追加だけなら不要
   ```mdx
   import { AIEditedFooter } from '@/components/ai-edited-footer';
 
@@ -93,7 +97,7 @@ type(scope): subject
 **特定技術・ツールのリファレンス・How To**
 - 特定技術のBest Practice（Go Goroutines、SWRなど）
 - ツール比較・Tips集
-- Reflectで代替可能なもの
+- 特定技術・ツールのリファレンス
 
 ### 判断の問い
 「このページは『なぜこうするか』を語っているか？」
@@ -125,41 +129,18 @@ type(scope): subject
 | ADR - Architecture Decision Records | ADR |
 | Philosophy of Digital Gardens | Digital Garden |
 
-## Reflect.app連携
-
-### Reflectリンクの更新ルール
-- 適切なカテゴリ内に `index.mdx` へ追加（アルファベット順）
-- カテゴリ: AI & Machine Learning / Development & Tools / Workflow & Productivity / Philosophy & Design / Knowledge Management / Photography / Life & Interests
-- タイトルがない場合はリンク内容からタイトルを生成して追加
-
-### MDX→Reflect移行の判断基準
-**Reflectに移行推奨**
-- ツールリスト・比較（頻繁に更新されるもの）
-- 設定やTips集
-- 外部リンクが多いもの
-
-**MDXのまま保持**
-- 構造化された長文ドキュメント
-- コードブロックが多用されているもの
-- 自分の思想・判断基準を語るもの
-
-### コンテンツ移行のワークフロー
-1. **フォーマット変換**: テーブル形式→箇条書き形式（Reflectはテーブル非対応）
-2. **Reflect作成**: 変換したコンテンツでReflectページを作成
-3. **index.mdx更新**: 新しいReflectリンクをアルファベット順で追加
-4. **旧ファイル削除**: 移行完了後、元のMDXファイルを削除
-
-## Reflect Pageマスター同期ワークフロー
+## コンテンツ管理方針
 
 ### 基本原則
-- **Reflect pageをマスター**として扱う
-- 指示があれば、Reflect pageの内容を基にMDXを更新
+- **MDX/Gitをマスター**として扱う
+- **Reflectは下書き**として扱い、メモ、情報収集、公開前の思考整理に利用する
+- 既存のReflectリンクは維持してよいが、新しい公開コンテンツは原則としてMDXへ保存する
 
-### 同期タスク手順
+### ReflectからMDXへの移行
 1. WebFetchでReflect pageの最新内容を取得
-2. 既存MDXファイルとの差分確認
-3. MDXをReflect pageの構造・内容に合わせて更新
-4. 元のReflectリンクをCalloutで明記維持
+2. ユーザーの原文を維持したままMDXへ移す
+3. 必要なfrontmatter、体裁、Referencesのみを補う
+4. `index.mdx`の適切なカテゴリへMDXリンクを追加する
 
 ## Deep Research管理方針
 
@@ -169,7 +150,7 @@ ChatGPTやClaude Researchで深掘りしたトピックは `deep-research-collec
 ### 分類判断
 **Deep Research対象**: 問いを立てて探求・分析・調査したもの、新しい洞察があるもの
 
-**Reflectリンク対象**: ツール紹介・比較、チートシート・リファレンス、設定やTips集
+**通常メモ対象**: ツール紹介・比較、チートシート・リファレンス、設定やTips集。個別のMDXまたは既存のコレクションへ保存する
 
 ### フォーマット
 ```markdown
