@@ -35,7 +35,7 @@ Ref: users.id < posts.user_id
 
 ER図だけを画像やWebサービス上で管理すると、変更理由や差分を追いにくい。DBMLをリポジトリに置けば、通常のコードと同じようにPull Requestでレビューでき、誰が・いつ・なぜ変更したかを履歴として残せる。
 
-ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残り、アプリケーションやマイグレーションの変更と同じ単位でレビューできる。
+ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残る。
 
 ## dbdocsの役割
 
@@ -51,7 +51,9 @@ GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブラン�
 
 ## 運用
 
-プロジェクトごとにDBMLファイルを作り、そのリポジトリで管理する。既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
+プロジェクトごとにDBMLファイルを作る。置き場所はdocsリポジトリを推奨する。docsリポジトリがない場合は、`.kiro/`や`.claude/`のようなディレクトリで管理すればよい。
+
+既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
 
 ## 注意点
 
