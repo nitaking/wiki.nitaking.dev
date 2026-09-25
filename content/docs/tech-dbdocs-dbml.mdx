@@ -9,7 +9,7 @@ DB設計は、**DBMLファイルを正本としてGitで管理し、dbdocsを閲
 
 [DBML（Database Markup Language）](https://dbml.dbdiagram.io/)は、データベースの構造を記述するためのオープンソースのDSL。SQLのDDLよりも簡潔で、テーブル、カラム、インデックス、リレーション、設計意図をコードとして読みやすく残せる。
 
-```dbml
+```dbml title="database.dbml"
 Project example {
   database_type: 'PostgreSQL'
   Note: 'Example database'
@@ -35,7 +35,7 @@ Ref: users.id < posts.user_id
 
 ER図だけを画像やWebサービス上で管理すると、変更理由や差分を追いにくい。DBMLをリポジトリに置けば、通常のコードと同じようにPull Requestでレビューでき、誰が・いつ・なぜ変更したかを履歴として残せる。
 
-ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残り、アプリケーションやマイグレーションの変更と同じ単位でレビューできる。
+ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残る。
 
 ## dbdocsの役割
 
@@ -49,29 +49,11 @@ dbdocs build ./docs/database.dbml --project example
 
 GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブランチへマージされたDBMLを自動で公開できる。アクセストークンは`DBDOCS_TOKEN`としてSecretsに保存し、リポジトリにはコミットしない。
 
-## 推奨する運用
+## 運用
 
-設計変更では、DBMLと実際のマイグレーションを同じPull Requestで更新する。レビューでは、DBMLの差分で構造と意図を確認し、マージ後にCIがdbdocsを更新する。
+プロジェクトごとにDBMLファイルを作る。置き場所はdocsリポジトリを推奨する。docsリポジトリがない場合は、`.kiro/`や`.claude/`のようなディレクトリで管理すればよい。
 
-```text
-DBMLを変更
-  → Pull Requestでレビュー
-  → マイグレーションと一緒にマージ
-  → CIでdbdocsを更新
-```
-
-たとえば、次のような構成にする。
-
-```text
-docs/
-└── database.dbml
-
-.github/
-└── workflows/
-    └── dbdocs.yml
-```
-
-DBMLと実DBの乖離を防ぐには、「DB変更時はDBMLも更新する」をPull Requestのチェック項目に含める。既存DBから始める場合は、`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる。
+既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
 
 ## 注意点
 
@@ -81,8 +63,14 @@ DBMLは設計とドキュメントの正本であり、マイグレーション�
 
 ## References
 
-- [dbdocs](https://dbdocs.io/)
-- [dbdocs Quickstart Guide](https://docs.dbdocs.io/)
-- [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/)
-- [DBML](https://dbml.dbdiagram.io/)
-- [DBML Syntax](https://dbml.dbdiagram.io/docs/)
+- [dbdocs](https://dbdocs.io/) — 公式サイト
+- [dbdocs Quickstart Guide](https://docs.dbdocs.io/) — インストールから`dbdocs build`までの手順
+- [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/) — `DBDOCS_TOKEN`を使ったCIからの公開
+- [DBML](https://dbml.dbdiagram.io/) — DBMLの概要
+- [DBML Syntax](https://dbml.dbdiagram.io/docs/) — `Table` / `Ref` / `Note`などの構文リファレンス
+- [DBML CLI](https://dbml.dbdiagram.io/cli/) — `db2dbml` / `sql2dbml` / `dbml2sql`
+- [dbdocs CLI (npm)](https://www.npmjs.com/package/dbdocs) — `build` / `db2dbml` / `token` などのコマンド一覧
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
