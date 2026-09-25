@@ -9,7 +9,7 @@ DB設計は、**DBMLファイルを正本としてGitで管理し、dbdocsを閲
 
 [DBML（Database Markup Language）](https://dbml.dbdiagram.io/)は、データベースの構造を記述するためのオープンソースのDSL。SQLのDDLよりも簡潔で、テーブル、カラム、インデックス、リレーション、設計意図をコードとして読みやすく残せる。
 
-```dbml
+```text title="database.dbml"
 Project example {
   database_type: 'PostgreSQL'
   Note: 'Example database'
@@ -53,13 +53,6 @@ GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブラン�
 
 設計変更では、DBMLと実際のマイグレーションを同じPull Requestで更新する。レビューでは、DBMLの差分で構造と意図を確認し、マージ後にCIがdbdocsを更新する。
 
-```text
-DBMLを変更
-  → Pull Requestでレビュー
-  → マイグレーションと一緒にマージ
-  → CIでdbdocsを更新
-```
-
 たとえば、次のような構成にする。
 
 ```text
@@ -71,7 +64,7 @@ docs/
     └── dbdocs.yml
 ```
 
-DBMLと実DBの乖離を防ぐには、「DB変更時はDBMLも更新する」をPull Requestのチェック項目に含める。既存DBから始める場合は、`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる。
+DBMLと実DBの乖離を防ぐには、「DB変更時はDBMLも更新する」をPull Requestのチェック項目に含める。既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
 
 ## 注意点
 
@@ -86,3 +79,9 @@ DBMLは設計とドキュメントの正本であり、マイグレーション�
 - [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/)
 - [DBML](https://dbml.dbdiagram.io/)
 - [DBML Syntax](https://dbml.dbdiagram.io/docs/)
+- [DBML CLI](https://dbml.dbdiagram.io/cli/) — `db2dbml` / `sql2dbml` / `dbml2sql`
+- [dbdocs CLI (npm)](https://www.npmjs.com/package/dbdocs) — `build` / `db2dbml` / `token` などのコマンド一覧
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
