@@ -35,6 +35,8 @@ Ref: users.id < posts.user_id
 
 ER図を画像やWebサービス上で描くと、修正のたびに図を直す必要がある。DBMLならテキストを書き換えるだけで修正でき、dbdocsに渡せばテーブル定義やリレーションとしてそのまま見られる。
 
+ER図を書くだけなら[Mermaid](https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html)や[D2](https://d2lang.com/tour/sql-tables/)でも代用できる。ただ、DBMLはDB設計専用のDSLなので書きやすく、ここが一番よい。
+
 dbdocsは閲覧・共有のためのビューで、design docそのものは`.dbml`ファイル。テキストなので、ツールを変更しても設計が残る。
 
 ## dbdocsの役割
@@ -68,6 +70,8 @@ DBMLはdesign docのフォーマットであり、マイグレーションの代
 - [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/) — `DBDOCS_TOKEN`を使ったCIからの公開
 - [DBML](https://dbml.dbdiagram.io/) — DBMLの概要
 - [DBML Syntax](https://dbml.dbdiagram.io/docs/) — `Table` / `Ref` / `Note`などの構文リファレンス
+- [Mermaid Entity Relationship Diagrams](https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html) — MermaidのER図構文
+- [D2 SQL Tables](https://d2lang.com/tour/sql-tables/) — D2でテーブルを表す`sql_table`シェイプ
 - [DBML CLI](https://dbml.dbdiagram.io/cli/) — `db2dbml` / `sql2dbml` / `dbml2sql`
 - [dbdocs CLI (npm)](https://www.npmjs.com/package/dbdocs) — `build` / `db2dbml` / `token` などのコマンド一覧
 
