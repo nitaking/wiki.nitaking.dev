@@ -1,9 +1,9 @@
 ---
 title: dbdocsとDBMLでDB設計を管理する
-description: DBMLを設計の正本としてGit管理し、dbdocsで閲覧・共有する
+description: DB設計のdesign docをDBMLで書き、dbdocsで閲覧・共有する
 ---
 
-DB設計は、**DBMLファイルを正本としてGitで管理し、dbdocsを閲覧・共有のためのビューとして使う**のがよい。
+DB設計のdesign docは、**DBMLをフォーマットとして書き、dbdocsで閲覧・共有する**のがよい。
 
 ## DBMLとは
 
@@ -31,11 +31,13 @@ Table posts {
 Ref: users.id < posts.user_id
 ```
 
-## なぜDBMLファイルをGit管理するか
+## なぜDBMLで書くか
 
-ER図だけを画像やWebサービス上で管理すると、変更理由や差分を追いにくい。DBMLをリポジトリに置けば、通常のコードと同じようにPull Requestでレビューでき、誰が・いつ・なぜ変更したかを履歴として残せる。
+ER図を画像やWebサービス上で描くと、修正のたびに図を直す必要がある。DBMLならテキストを書き換えるだけで修正でき、dbdocsに渡せばテーブル定義やリレーションとしてそのまま見られる。
 
-ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残る。
+ER図を書くだけなら[Mermaid](https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html)や[D2](https://d2lang.com/tour/sql-tables/)でも代用できる。ただ、DBMLはDB設計専用のDSLなので書きやすく、ここが一番よい。
+
+dbdocsは閲覧・共有のためのビューで、design docそのものは`.dbml`ファイル。テキストなので、ツールを変更しても設計が残る。
 
 ## dbdocsの役割
 
@@ -57,7 +59,7 @@ GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブラン�
 
 ## 注意点
 
-DBMLは設計とドキュメントの正本であり、マイグレーション実行そのものの代替ではない。実DBへの変更は、利用中のマイグレーションツールで管理する。
+DBMLはdesign docのフォーマットであり、マイグレーションの代替ではない。実DBへの変更は、利用中のマイグレーションツールで管理する。
 
 また、dbdocsのプロジェクトは作成時の公開範囲を必ず確認する。スキーマには内部情報が含まれるため、公開できないDBではパスワード保護またはPrivate設定を使う。
 
@@ -68,6 +70,8 @@ DBMLは設計とドキュメントの正本であり、マイグレーション�
 - [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/) — `DBDOCS_TOKEN`を使ったCIからの公開
 - [DBML](https://dbml.dbdiagram.io/) — DBMLの概要
 - [DBML Syntax](https://dbml.dbdiagram.io/docs/) — `Table` / `Ref` / `Note`などの構文リファレンス
+- [Mermaid Entity Relationship Diagrams](https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html) — MermaidのER図構文
+- [D2 SQL Tables](https://d2lang.com/tour/sql-tables/) — D2でテーブルを表す`sql_table`シェイプ
 - [DBML CLI](https://dbml.dbdiagram.io/cli/) — `db2dbml` / `sql2dbml` / `dbml2sql`
 - [dbdocs CLI (npm)](https://www.npmjs.com/package/dbdocs) — `build` / `db2dbml` / `token` などのコマンド一覧
 
