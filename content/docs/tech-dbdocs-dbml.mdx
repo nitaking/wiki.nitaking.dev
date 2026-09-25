@@ -9,7 +9,7 @@ DB設計は、**DBMLファイルを正本としてGitで管理し、dbdocsを閲
 
 [DBML（Database Markup Language）](https://dbml.dbdiagram.io/)は、データベースの構造を記述するためのオープンソースのDSL。SQLのDDLよりも簡潔で、テーブル、カラム、インデックス、リレーション、設計意図をコードとして読みやすく残せる。
 
-```text title="database.dbml"
+```dbml title="database.dbml"
 Project example {
   database_type: 'PostgreSQL'
   Note: 'Example database'
@@ -74,11 +74,11 @@ DBMLは設計とドキュメントの正本であり、マイグレーション�
 
 ## References
 
-- [dbdocs](https://dbdocs.io/)
-- [dbdocs Quickstart Guide](https://docs.dbdocs.io/)
-- [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/)
-- [DBML](https://dbml.dbdiagram.io/)
-- [DBML Syntax](https://dbml.dbdiagram.io/docs/)
+- [dbdocs](https://dbdocs.io/) — 公式サイト
+- [dbdocs Quickstart Guide](https://docs.dbdocs.io/) — インストールから`dbdocs build`までの手順
+- [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/) — `DBDOCS_TOKEN`を使ったCIからの公開
+- [DBML](https://dbml.dbdiagram.io/) — DBMLの概要
+- [DBML Syntax](https://dbml.dbdiagram.io/docs/) — `Table` / `Ref` / `Note`などの構文リファレンス
 - [DBML CLI](https://dbml.dbdiagram.io/cli/) — `db2dbml` / `sql2dbml` / `dbml2sql`
 - [dbdocs CLI (npm)](https://www.npmjs.com/package/dbdocs) — `build` / `db2dbml` / `token` などのコマンド一覧
 
