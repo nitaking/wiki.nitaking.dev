@@ -49,22 +49,9 @@ dbdocs build ./docs/database.dbml --project example
 
 GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブランチへマージされたDBMLを自動で公開できる。アクセストークンは`DBDOCS_TOKEN`としてSecretsに保存し、リポジトリにはコミットしない。
 
-## 推奨する運用
+## 運用
 
-設計変更では、DBMLと実際のマイグレーションを同じPull Requestで更新する。レビューでは、DBMLの差分で構造と意図を確認し、マージ後にCIがdbdocsを更新する。
-
-たとえば、次のような構成にする。
-
-```text
-docs/
-└── database.dbml
-
-.github/
-└── workflows/
-    └── dbdocs.yml
-```
-
-DBMLと実DBの乖離を防ぐには、「DB変更時はDBMLも更新する」をPull Requestのチェック項目に含める。既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
+プロジェクトごとにDBMLファイルを作り、そのリポジトリで管理する。既存DBから始める場合は、[DBML CLI](https://dbml.dbdiagram.io/cli/)の`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる（`db2dbml`はdbdocs CLIにも含まれる）。
 
 ## 注意点
 
