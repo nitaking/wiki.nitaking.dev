@@ -1,0 +1,88 @@
+---
+title: dbdocsとDBMLでDB設計を管理する
+description: DBMLを設計の正本としてGit管理し、dbdocsで閲覧・共有する
+---
+
+DB設計は、**DBMLファイルを正本としてGitで管理し、dbdocsを閲覧・共有のためのビューとして使う**のがよい。
+
+## DBMLとは
+
+[DBML（Database Markup Language）](https://dbml.dbdiagram.io/)は、データベースの構造を記述するためのオープンソースのDSL。SQLのDDLよりも簡潔で、テーブル、カラム、インデックス、リレーション、設計意図をコードとして読みやすく残せる。
+
+```dbml
+Project example {
+  database_type: 'PostgreSQL'
+  Note: 'Example database'
+}
+
+Table users {
+  id bigint [pk, increment]
+  name varchar [not null]
+  created_at timestamp [not null]
+}
+
+Table posts {
+  id bigint [pk, increment]
+  user_id bigint [not null]
+  title varchar [not null]
+  created_at timestamp [not null]
+}
+
+Ref: users.id < posts.user_id
+```
+
+## なぜDBMLファイルをGit管理するか
+
+ER図だけを画像やWebサービス上で管理すると、変更理由や差分を追いにくい。DBMLをリポジトリに置けば、通常のコードと同じようにPull Requestでレビューでき、誰が・いつ・なぜ変更したかを履歴として残せる。
+
+ここで重要なのは、dbdocs上の表示ではなく、リポジトリ内の`.dbml`ファイルを正本にすること。ツールを変更しても設計データが残り、アプリケーションやマイグレーションの変更と同じ単位でレビューできる。
+
+## dbdocsの役割
+
+[dbdocs](https://dbdocs.io/)は、DBMLからWeb上のデータベースドキュメントを生成するサービス。テーブル定義やリレーションを、コードを直接読まない人にも見やすい形で共有できる。
+
+```bash
+npm install -g dbdocs
+dbdocs login
+dbdocs build ./docs/database.dbml --project example
+```
+
+GitHub ActionsなどのCIから`dbdocs build`を実行すれば、mainブランチへマージされたDBMLを自動で公開できる。アクセストークンは`DBDOCS_TOKEN`としてSecretsに保存し、リポジトリにはコミットしない。
+
+## 推奨する運用
+
+設計変更では、DBMLと実際のマイグレーションを同じPull Requestで更新する。レビューでは、DBMLの差分で構造と意図を確認し、マージ後にCIがdbdocsを更新する。
+
+```text
+DBMLを変更
+  → Pull Requestでレビュー
+  → マイグレーションと一緒にマージ
+  → CIでdbdocsを更新
+```
+
+たとえば、次のような構成にする。
+
+```text
+docs/
+└── database.dbml
+
+.github/
+└── workflows/
+    └── dbdocs.yml
+```
+
+DBMLと実DBの乖離を防ぐには、「DB変更時はDBMLも更新する」をPull Requestのチェック項目に含める。既存DBから始める場合は、`db2dbml`でデータベースから、または`sql2dbml`でDDLから初期DBMLを生成できる。
+
+## 注意点
+
+DBMLは設計とドキュメントの正本であり、マイグレーション実行そのものの代替ではない。実DBへの変更は、利用中のマイグレーションツールで管理する。
+
+また、dbdocsのプロジェクトは作成時の公開範囲を必ず確認する。スキーマには内部情報が含まれるため、公開できないDBではパスワード保護またはPrivate設定を使う。
+
+## References
+
+- [dbdocs](https://dbdocs.io/)
+- [dbdocs Quickstart Guide](https://docs.dbdocs.io/)
+- [dbdocs CI Integration](https://docs.dbdocs.io/features/ci-integration/)
+- [DBML](https://dbml.dbdiagram.io/)
+- [DBML Syntax](https://dbml.dbdiagram.io/docs/)
