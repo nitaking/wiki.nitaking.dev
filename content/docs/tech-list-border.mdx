@@ -1,0 +1,154 @@
+---
+title: "List Border実装手法レポート"
+description: "以下はClaude Codeによるレポート。"
+---
+
+以下はClaude Codeによるレポート。
+
+tailwind採用時では `divide-y` が最も都合がよくシンプル。
+
+内部CSSは `:not` を用いた疑似クラスで実現している。
+
+```
+& > :not(:last-child) {
+  border-top-width: 0px;
+  border-bottom-width: 1px;
+}
+```
+
+> ## 概要
+>
+> リストアイテム間にborderを実装するための主要な手法をまとめました。
+>
+> ## 実装手法
+>
+> ### 1. CSS `:not(:last-child)` セレクター
+>
+> **用途**: 最後の要素以外にborderを適用
+>
+> ```css
+> .list-item:not(:last-child) {
+>   border-bottom: 1px solid #e5e7eb;
+> }
+> ```
+>
+> **メリット**:
+>
+> - シンプルで理解しやすい
+>
+> - CSSのみで完結
+>
+> **デメリット**:
+>
+> - CSS Modulesが必要
+>
+> - Tailwindの利点を活用できない
+>
+> ### 2. Tailwind CSS `divide-*` ユーティリティ（推奨）
+>
+> **用途**: 子要素間に自動的にborderを挿入
+>
+> ```jsx
+> <div className="divide-y divide-gray-200">
+>   <div>Item 1</div>
+>   <div>Item 2</div>
+>   <div>Item 3</div>
+> </div>
+> ```
+>
+> **メリット**:
+>
+> - 最も簡潔
+>
+> - Tailwindの設計思想に準拠
+>
+> - レスポンシブ対応が容易（`lg:divide-y-2`など）
+>
+> **デメリット**:
+>
+> - 親要素にクラスを追加する必要
+>
+> ### 3. 条件付きレンダリング
+>
+> **用途**: 動的なリストで細かい制御が必要な場合
+>
+> ```jsx
+> {items.map((item, index) => (
+>   <div key={item.id}>
+>     <Item data={item} />
+>     {index < items.length - 1 && (
+>       <div className="border-b border-gray-200" />
+>     )}
+>   </div>
+> ))}
+> ```
+>
+> **メリット**:
+>
+> - 完全な制御が可能
+>
+> - 条件に応じてborderの表示/非表示を切り替え可能
+>
+> **デメリット**:
+>
+> - コードが冗長
+>
+> - パフォーマンスへの軽微な影響
+>
+> ### 4. CSS隣接セレクター
+>
+> **用途**: CSS Modulesでの隣接要素制御
+>
+> ```css
+> .listItem + .listItem {
+>   border-top: 1px solid #e5e7eb;
+> }
+> ```
+>
+> **メリット**:
+>
+> - HTMLの構造変更不要
+>
+> - 最初の要素にborderが付かない
+>
+> **デメリット**:
+>
+> - CSS Modulesが必要
+>
+> - 複雑なレイアウトでは予期しない動作の可能性
+>
+> ## 推奨事項
+>
+> **本プロジェクトでは** `divide-y` **を推奨**:
+>
+> - Tailwindの設計思想に準拠
+>
+> - コードが最も簡潔
+>
+> - デザインシステムとの一貫性
+>
+> - レスポンシブ対応が容易
+>
+> ## 使用例（実際のコード）
+>
+> ```jsx
+> // SummaryDetailSections.tsx での実装例
+> <div className="divide-y divide-fl-border-light">
+>   {sections.map((section) => (
+>     <SummaryDetailSection 
+>       key={section.id} 
+>       section={section} 
+>     />
+>   ))}
+> </div>
+> ```
+>
+> ## 注意点
+>
+> - デザインシステムの色を使用（`divide-fl-border-light`など）
+>
+> - レスポンシブ対応が必要な場合は `lg:divide-y-2` などを併用
+>
+> - 複雑なレイアウトでは条件付きレンダリングも検討
+>
+> 生成日時: 2025-07-24

@@ -1,0 +1,13 @@
+---
+title: "remをhtmlに記載する理由"
+description: "rem は常に <html> の font-size が基準"
+---
+
+- `rem` は常に `<html>` **の** `font-size` **が基準**
+- `html` だけに `font-size` を設定しておくと一元管理できる
+
+## [MDN/CSS/font-size](https://developer.mozilla.org/ja/docs/Web/CSS/font-size)
+
+> [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem)
+>
+> (`rem` などの) ルートを基準としたフォント相対単位では、フォントサイズは [`<html>`](https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/html) （ルート）要素で使われているフォントのサイズからの相対値です。

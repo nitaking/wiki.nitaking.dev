@@ -1,0 +1,33 @@
+---
+title: "UI Controlled / Uncontrolled Component"
+description: "制御コンポーネント（controlled） と 非制御コンポーネント（uncontrolled）"
+---
+
+**制御コンポーネント（controlled）** と **非制御コンポーネント（uncontrolled）**
+
+[Radixのslider](https://www.radix-ui.com/primitives/docs/components/slider#slider) ではvalue/defaultValueどちらも存在する。
+
+これはcontrolled/uncontrolledをどちらも制御可能にするため。
+
+### 使い分けは？
+
+![](/images/reflect/5a766b7f32a1.png)
+
+#### Value
+
+```
+const [name, setName] = useState("");
+
+<Input
+    value={name}
+    onChange={(event) => setName(event.target.value)}
+/>
+```
+
+#### defaultValue
+
+```
+// 初回マウント時だけ "A" が初期値になる。
+// 後から initialName が "B" になっても、入力値は自動で B にはならない。
+<Input defaultValue={initialName} />
+```

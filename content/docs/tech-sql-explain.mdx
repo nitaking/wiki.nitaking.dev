@@ -1,0 +1,22 @@
+---
+title: "SQL Explain"
+description: "サマリ"
+---
+
+## サマリ
+
+![](/images/reflect/d7e6d538d9cf.png)
+
+[https://qiita.com/miu-P/items/2e735b457b87b6af914c](https://qiita.com/miu-P/items/2e735b457b87b6af914c)
+
+- **ALL, index: 要チューニング**
+
+![](/images/reflect/bad8c2ba86c0.png)
+
+> - **インデックス追加前は「ALL」「NULL」「rowsが大きい」→危険信号**
+>
+> - **インデックス追加後は「ref/eq_ref」「複合インデックス」「rowsが小さい」→最適化成功**
+>
+> **EXPLAINのBefore/Afterは、SQL最適化の成否を判断する最大のポイントです！**
+>
+> 他にもEXPLAINの見方や気になる点があればご質問ください。

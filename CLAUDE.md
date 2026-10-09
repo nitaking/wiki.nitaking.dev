@@ -135,7 +135,8 @@ type(scope): subject
 ### 基本原則
 - **MDX/Gitをマスター**として扱う
 - **Reflectは下書き**として扱い、メモ、情報収集、公開前の思考整理に利用する
-- 既存のReflectリンクは維持してよいが、新しい公開コンテンツは原則としてMDXへ保存する
+- 2026年10月にReflect公開メモをMDXへ移行済み（#16）。新しい公開コンテンツへReflect URLを直接追加しない
+- 残存するReflectリンクは出典用途（`tech-commit-message`、`tech-go-goroutine-patterns`）のみ
 
 ### ReflectからMDXへの移行
 1. WebFetchでReflect pageの最新内容を取得

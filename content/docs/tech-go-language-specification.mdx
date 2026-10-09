@@ -1,0 +1,41 @@
+---
+title: "Go Language Specification"
+description: "Factoring"
+---
+
+## Factoring
+
+const 定義をまとめること。FactoringやGroupingと呼ばれる
+
+```
+const (
+	codeExpiredDuration = 10 * time.Minute
+	codesTTL            = time.Hour
+
+	sendLimit    = 5
+	sendLimitTTL = time.Hour
+
+	verifyLimit    = 5
+	verifyLimitTTL = time.Hour
+)
+```
+
+## ポインタを使うかどうかの判断基準
+
+Go はデフォルトで値渡し。
+
+元の変数を変更する場合はポインタ。
+
+1. 関数で元の値を変更するか
+1. 大きな構造体を渡す場合
+1. nilを表現したい。
+   値型はゼロ値しか持てない
+1. メソッドレシーバーで状態を変更する場合
+   - 構造体のフィールドを変更するメソッドはポインタレシーバが必要
+1. マップの value に構造体を格納する
+
+![](/images/reflect/77954418515f.png)
+
+## 公開メソッドについて
+
+非公開のプロパティは、値を取り出すには公開メソッドが必要。

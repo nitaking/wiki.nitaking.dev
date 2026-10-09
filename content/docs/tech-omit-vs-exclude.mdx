@@ -1,0 +1,17 @@
+---
+title: "OmitとExcludeの違い"
+description: "Omit"
+---
+
+- **Omit**
+  ```
+  type Data = { id: number; name: string }
+  type SimpleData = Omit<Data, 'name'>
+  ```
+  - Object型に対して除外する
+- **Exclude**
+  ```
+  type ECShop = 'rakuten' | 'yahoo' | 'shopify' | 'unknown';
+  type KnownECShop = Exclude<ECShop, 'unknown'>;
+  ```
+  - Union Typeの除外で仕様する

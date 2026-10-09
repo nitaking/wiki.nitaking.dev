@@ -1,0 +1,15 @@
+---
+title: "Go Error Handling"
+description: "Sentinel Error"
+---
+
+## Sentinel Error
+
+sentinel errorを積極的にりようしていきたい。
+
+```
+var (
+    ErrInvalidCode = errors.New("invalid verification code")
+    ErrCodeExpired = errors.New("verification code expired")
+)
+```

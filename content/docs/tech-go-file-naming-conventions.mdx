@@ -1,0 +1,18 @@
+---
+title: "Go - File Naming Conventions"
+description: "Goのファイル名を冗長にしていいか"
+---
+
+## Goのファイル名を冗長にしていいか
+
+Go慣習では、ファイル名に名前を入れると冗長だと言われているが、
+
+> usecase/user_usecase.go
+
+のように可読性を優先していいと考えている。
+
+> [https://medium.com/@omidahn/clean-architecture-in-go-golang-a-comprehensive-guide-f8e422b7bfae](https://medium.com/@omidahn/clean-architecture-in-go-golang-a-comprehensive-guide-f8e422b7bfae)
+>
+> また、Go Clean Architecture Starterでは `use_cases/user_use_cases.go` や `use_cases/auth_use_cases.go` のように、ディレクトリ名と重複するファイル名を採用しています。
+>
+> なので「冗長だからダメ」というのは理想論であって、現実のプロジェクトでは `email_otp_usecase.go` のようなファイル名は普通に使われています。特にclean architecture系のGoプロジェクトでは、`{ドメイン名}_usecase.go` というパターンはむしろ定番と言っていいくらいです。

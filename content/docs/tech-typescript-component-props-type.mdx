@@ -1,0 +1,19 @@
+---
+title: "TypeScriptでコンポーネントのprops型を取得する"
+description: "TypeScript"
+---
+
+- TypeScript
+
+---
+
+```
+// コンポーネント定義
+const MyComponent = (props: { name: string; age: number }) => {
+  return <div>{props.name}</div>;
+};
+
+// props型を取得
+type MyComponentProps = React.ComponentProps<typeof MyComponent>;
+// MyComponentProps = { name: string; age: number }
+```

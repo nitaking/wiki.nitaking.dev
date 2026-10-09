@@ -1,0 +1,34 @@
+---
+title: "Storybook Docs Style Reset "
+description: "meta > parameters > docs > page にstyleを埋め込むと、上書きできる"
+---
+
+meta \> parameters \> docs \> page にstyleを埋め込むと、上書きできる
+
+```
+  const meta: Meta<typeof Component> = {
+  title: 'component',
+  component: Component,
+  parameters: {
+    
+    docs: {
+      page: () => (
+        <>
+          <style>{`
+            h2 { background-color: #fff; }
+          `}</style>
+
+          <DocsPage />
+        </>
+      ),
+      description: {
+        component: `
+
+## デザイン仕様
+`,
+      },
+    },
+  },
+  tags: ['autodocs'],
+}
+```

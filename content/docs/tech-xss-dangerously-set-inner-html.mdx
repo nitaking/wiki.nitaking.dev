@@ -1,0 +1,19 @@
+---
+title: "XSS対策とdangerouslySetInnerHTML"
+description: "オプション2: HTMLサニタイズライブラリを使用"
+---
+
+## オプション2: HTMLサニタイズライブラリを使用
+
+```
+import DOMPurify from 'dompurify'
+
+// HTMLを許可するが、悪意のあるスクリプトを除去
+{release.with_body ? (
+\<Link href={`/release/${release.id}`}>{release.short}\</Link>
+) : (
+\<span dangerouslySetInnerHTML={{
+__html: DOMPurify.sanitize(release.short)
+}} />
+)}
+```

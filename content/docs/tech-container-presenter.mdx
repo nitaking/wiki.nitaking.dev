@@ -1,0 +1,33 @@
+---
+title: "Container-Presenter"
+description: "UIとロジックの分離をすることのメリットが多いので、Container-Presenter を提唱することが多いです。"
+---
+
+UIとロジックの分離をすることのメリットが多いので、`Container-Presenter` を提唱することが多いです。
+
+これは、ディレクトリを分けるようなことではなく、Componentの責務分離をすることで、再利用性と可読性を保つために推しています。
+
+イメージは、以下です。
+
+- `DetailComponentContainer → DetailComponent`
+
+## なぜやるのか
+
+シンプルなUIの場合は特段不要ですが、Presentationの要件が複雑で、構成も複雑な場合に、効果を発揮します。
+
+例えば、
+
+- Modalを持つ
+- 描画に関する状態を複数もつ
+- いくつかのパーツを組み合わせている
+- フォームロジックを持っている
+
+などです。
+
+UIだけで複雑な上に、外部APIとの通信とdataの注入が加わると、複雑さがしきい値を超えます。
+
+イメージとしては以下の図に近いですが、StateManagementは、UI専用のものはPresenterにいれるかもしれません。
+
+![](/images/reflect/4532dbeda31b.png)
+
+> 引用: [https://medium.com/generic-ui/the-new-approach-to-the-container-presenter-pattern-in-angular-dac60ca1b65e](https://medium.com/generic-ui/the-new-approach-to-the-container-presenter-pattern-in-angular-dac60ca1b65e)

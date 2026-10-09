@@ -1,0 +1,80 @@
+---
+title: "D2"
+description: "Home | D2 Documentation"
+---
+
+- [Home | D2 Documentation](https://d2lang.com/)
+- [D2入門：Text-To-Diagram言語で図を作成する方法 まとめ](https://zenn.dev/shunta_furukawa/articles/c66567a35d6150)
+
+## Cheatsheet
+
+Open d2 playground
+
+```
+d2 play xxx.d2
+```
+
+## e.g.
+
+### mise tasks
+
+```
+[tools]
+"aqua:terrastruct/d2" = "latest"
+
+[tasks."d2:play"]
+description = "Open a .d2 file in browser for live preview. Usage: mise run d2:play <path/to/file.d2>"
+run = """
+#!/usr/bin/env zsh
+set -euo pipefail
+d2 play "${1:?Usage: mise run d2:play <path/to/file.d2>}"
+"""
+
+[tasks."d2:png"]
+description = "Convert .d2 file or all .d2 files in a directory to PNG. Usage: mise run d2:png <path>"
+run = """
+#!/usr/bin/env zsh
+set -euo pipefail
+target="${1:?Usage: mise run d2:png <path/to/file.d2 or dir>}"
+if [[ -f "$target" ]]; then
+  out="${target%.d2}.png"
+  echo "Generating $out"
+  d2 "$target" "$out"
+elif [[ -d "$target" ]]; then
+  find "$target" -name '*.d2' | while read -r f; do
+    out="${f%.d2}.png"
+    echo "Generating $out"
+    d2 "$f" "$out"
+  done
+else
+  echo "Error: '$target' not found" >&2
+  exit 1
+fi
+echo "Done."
+"""
+
+[tasks."d2:png:all"]
+description = "Convert all .d2 files to PNG in parallel"
+run = """
+#!/usr/bin/env zsh
+set -euo pipefail
+cores=$(sysctl -n hw.logicalcpu)
+find design-docs -name '*.d2' | xargs -P "$cores" -I{} zsh -c 'out="${1%.d2}.png"; echo "Generating $out"; d2 "$1" "$out"' _ {}
+echo "Done."
+"""
+
+[tasks."d2:png:changed"]
+description = "Convert only git-changed .d2 files to PNG in parallel"
+run = """
+#!/usr/bin/env zsh
+set -euo pipefail
+cores=$(sysctl -n hw.logicalcpu)
+files=$(git diff --name-only HEAD -- '*.d2'; git ls-files --others --exclude-standard '*.d2')
+if [[ -z "$files" ]]; then
+  echo "No changed .d2 files."
+  exit 0
+fi
+echo "$files" | xargs -P "$cores" -I{} zsh -c 'out="${1%.d2}.png"; echo "Generating $out"; d2 "$1" "$out"' _ {}
+echo "Done."
+"""
+```

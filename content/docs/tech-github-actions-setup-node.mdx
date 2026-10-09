@@ -1,0 +1,19 @@
+---
+title: "GitHub Actions Setup Node"
+description: "node-version-file にて、以下のファイルのいずれかを指定可能"
+---
+
+- `node-version-file` にて、以下のファイルのいずれかを[指定可能](https://github.com/actions/setup-node)
+  > Examples: package.json, .nvmrc, .node-version, .tool-versions
+  ```
+  - uses: actions/setup-node@v4
+    with:
+      # Version Spec of the version to use in SemVer notation.
+      # It also admits such aliases as lts/*, latest, nightly and canary builds
+      # Examples: 12.x, 10.15.1, >=10.15.0, lts/Hydrogen, 16-nightly, latest, node
+      node-version: ''
+  
+      # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
+      # If node-version and node-version-file are both provided the action will use version from node-version. 
+      node-version-file: ''
+  ```
