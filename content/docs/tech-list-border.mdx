@@ -129,23 +129,7 @@ tailwind採用時では `divide-y` が最も都合がよくシンプル。
 >
 > - レスポンシブ対応が容易
 >
-> ## 使用例（実際のコード）
->
-> ```jsx
-> // SummaryDetailSections.tsx での実装例
-> <div className="divide-y divide-fl-border-light">
->   {sections.map((section) => (
->     <SummaryDetailSection 
->       key={section.id} 
->       section={section} 
->     />
->   ))}
-> </div>
-> ```
->
 > ## 注意点
->
-> - デザインシステムの色を使用（`divide-fl-border-light`など）
 >
 > - レスポンシブ対応が必要な場合は `lg:divide-y-2` などを併用
 >
