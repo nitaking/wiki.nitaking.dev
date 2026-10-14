@@ -33,11 +33,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           data-website-id="7a637651-76c9-4062-a7b9-946a2434ba31"
           strategy="afterInteractive"
         />
-        <Script
-          src="https://orthodox-fox.pikapod.net/recorder.js"
-          data-website-id="7a637651-76c9-4062-a7b9-946a2434ba31"
-          strategy="afterInteractive"
-        />
         <AISearch>
           <RootProvider
             search={{}}
