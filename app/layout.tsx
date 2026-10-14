@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           strategy="afterInteractive"
         />
         <Script
-          src="https://orthodox-fox.pikapod.net/script.js"
+          src="https://pulse.nitaking.dev/script.js"
           data-website-id="7a637651-76c9-4062-a7b9-946a2434ba31"
           strategy="afterInteractive"
         />
