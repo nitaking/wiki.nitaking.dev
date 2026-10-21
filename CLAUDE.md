@@ -29,7 +29,7 @@
 
 ### コンテンツ構成
 - **フラット構造**: nikiv.devにインスパイアされた完全フラット構造を採用
-- **コンテンツのマスター**: 公開する知識はMDX/Gitをマスターとし、Reflectはメモ・収集・下書きに利用
+- **Reflect連携**: Reflectで書いたページはReflectリンクとして `index.mdx` に追加する。MDXに書くものとReflectで書くものを併用する
 - **ナビゲーション**: `meta.json` で手動管理
 - **ファイル命名規則**: カテゴリプレフィックス（tech-, philosophy-, workflow-, photography-等）で整理
 - **サブディレクトリ**: `meta/`（changelog, site-history）と `claude/` のみ
@@ -133,11 +133,15 @@ type(scope): subject
 ## コンテンツ管理方針
 
 ### 基本原則
-- **MDX/Gitをマスター**として扱う
-- **Reflectは下書き**として扱い、メモ、情報収集、公開前の思考整理に利用する
-- 既存のReflectリンクは維持してよいが、新しい公開コンテンツは原則としてMDXへ保存する
+- MDXとReflectを併用する。Reflectページはそれ自体をマスターとし、MDXへの転記はしない
+- Reflectに向くもの: ツール紹介・比較、Tips集、短いメモ、頻繁に更新するもの
+- MDXに向くもの: 構造化された長文、コードブロックの多いもの、自分の思想・判断基準を語るもの
 
-### ReflectからMDXへの移行
+### Reflectリンクの追加
+- `index.mdx` の適切なカテゴリへ追加する。関連するリンクは近くにまとめ、それ以外はアルファベット順
+- リンクテキストはReflectページのタイトルを使う。タイトルがなければ内容から付ける
+
+### ReflectからMDXへの移行（依頼があった場合のみ）
 1. WebFetchでReflect pageの最新内容を取得
 2. ユーザーの原文を維持したままMDXへ移す
 3. 必要なfrontmatter、体裁、Referencesのみを補う
@@ -151,7 +155,7 @@ ChatGPTやClaude Researchで深掘りしたトピックは `deep-research-collec
 ### 分類判断
 **Deep Research対象**: 問いを立てて探求・分析・調査したもの、新しい洞察があるもの
 
-**通常メモ対象**: ツール紹介・比較、チートシート・リファレンス、設定やTips集。個別のMDXまたは既存のコレクションへ保存する
+**Reflectリンク対象**: ツール紹介・比較、チートシート・リファレンス、設定やTips集
 
 ### フォーマット
 ```markdown
