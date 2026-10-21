@@ -1,0 +1,31 @@
+---
+title: TypeSpecでGoの型を指定する
+description: TypeSpecの@extensionでx-go-typeなどを出力し、oapi-codegenの生成結果を調整するメモ
+---
+
+TypeSpecの `@extension` で `x-go-type` や `x-oapi-codegen-extra-tags` をOpenAPIに出力すると、oapi-codegenで生成されるGoの型やstructタグを指定できる。
+
+```typespec
+model User {
+  @extension("x-go-type", "*bool")
+  @extension("x-oapi-codegen-extra-tags", #{ binding: "required" })
+  isActive?: boolean;
+}
+```
+
+- `x-go-type`: 生成されるGoの型を上書きする（`*bool` や `*int64` など）
+- `x-go-name`: 生成されるフィールド名・型名を上書きする
+- `x-oapi-codegen-extra-tags`: フィールドに任意のstructタグを付ける（`binding`、`validate` など）
+
+## References
+
+- [TypeSpecでOpenAPI(Swagger)によるスキーマ駆動開発とGo言語の自動生成による開発効率化 - SHOWROOM](https://note.com/showroom_blog/n/n2c77d7ee6304) - TypeSpecから `x-go-type` などを出力してGoを生成する実例
+- [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) - 対応しているOpenAPI拡張の一覧
+
+## Tags
+
+TypeSpec / OpenAPI / Go
+
+import { AIEditedFooter } from '@/components/ai-edited-footer';
+
+<AIEditedFooter />
