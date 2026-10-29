@@ -22,6 +22,16 @@ const config = {
         destination: '/meta/changelog',
         permanent: true,
       },
+      {
+        source: '/tech-no-react-fc',
+        destination: '/philosophy-how-i-write-typescript#no-reactfc',
+        permanent: true,
+      },
+      {
+        source: '/philosophy-barrel-files',
+        destination: '/philosophy-how-i-write-typescript#barrel-filesの問題点',
+        permanent: true,
+      },
     ];
   },
 };
