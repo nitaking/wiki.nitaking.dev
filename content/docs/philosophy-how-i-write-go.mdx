@@ -1,0 +1,82 @@
+---
+title: How I Write Go
+description: ファイル単位のSRP、domainとinfrastructureのファイル対応、センチネルエラー
+---
+
+## 1ファイル1型・1責務
+
+Single Responsibility Principle（単一責任の原則）のファイル単位への適用です。1つのファイルが1つの理由でしか変更されないようにする。repository.goに2つのinterfaceがあると、TargetUserの取得条件を変えるときとWrappedResultの保存契約を変えるときの両方でこのファイルが変わります。
+
+Bad
+
+```
+domain/
+└── repository.go   // TargetUserRepository と WrappedResultRepository
+```
+
+Good
+
+```
+domain/
+├── target_user_repository.go
+└── wrapped_result_repository.go
+```
+
+## domainとinfrastructureの対応
+
+Port and Adapter（ヘキサゴナルアーキテクチャ） の用語で、
+
+- domainのinterface = Port（アプリケーションが外に求める口）
+- infrastructureの実装 = Adapter（その口に具体技術を差し込むもの）
+
+です。ファイル名を揃えるのは「Portに対応するAdapterが一目で分かる」ためで、Screaming Architecture（ディレクトリやファイル名が、フレームワークではなく業務の構造を叫んでいる状態）の実践と
+
+Bad
+
+```
+domain/
+└── target_user_repository.go
+infrastructure/
+└── mysql.go
+```
+
+Good
+
+```
+domain/
+└── target_user_repository.go
+infrastructure/
+└── target_user_repository.go
+```
+
+## センチネルエラー
+
+センチネルエラーを利用していくマインドである。
+
+Bad
+
+```go
+if err != nil && err.Error() == "target user not found" {
+    // ...
+}
+```
+
+Good
+
+```go
+// domain
+var ErrTargetUserNotFound = errors.New("target user not found")
+
+// 呼び出し側
+if errors.Is(err, domain.ErrTargetUserNotFound) {
+    // ...
+}
+```
+
+## References
+
+- [The Single Responsibility Principle](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html) — Robert C. MartinによるSRPの解説
+- [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/) — Alistair CockburnによるPort and Adapterの原典
+- [Screaming Architecture](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html) — Robert C. MartinによるScreaming Architectureの原典
+- [Working with Errors in Go 1.13](https://go.dev/blog/go1.13-errors) — `errors.Is` / `errors.As` と `%w` の公式解説
+- [Don't just check errors, handle them gracefully](https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully) — センチネルエラーという呼び方が広まった記事
